@@ -1,0 +1,34 @@
+skillid: pg_create_policy
+name: CREATE POLICY
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new row-level security policy for a table"
+
+syntax:
+  primary: "CREATE POLICY name ON table_name [ AS { PERMISSIVE | RESTRICTIVE } ] [ FOR { ALL | SELECT | INSERT | UPDATE | DELETE } ] [ TO { role_name | PUBLIC | CURRENT_ROLE | CURRENT_USER | SESSION_USER } [, ...] ] [ USING ( using_expression ) ] [ WITH CHECK ( check_expression ) ]"
+
+key_parameters:
+  - name: name
+    description: "The name of the policy to be created"
+  - name: table_name
+    description: "The name (optionally schema-qualified) of the table the policy applies to"
+  - name: PERMISSIVE | RESTRICTIVE
+    description: "Specify whether the policy is permissive (combined with OR) or restrictive (combined with AND)"
+  - name: command
+    description: "The command to which the policy applies: ALL, SELECT, INSERT, UPDATE, or DELETE"
+  - name: role_name
+    description: "The role(s) to which the policy is applied. Default is PUBLIC"
+  - name: using_expression
+    description: "SQL conditional expression for checking existing rows visibility"
+  - name: check_expression
+    description: "SQL conditional expression for checking new rows being inserted or updated"
+
+related_commands:
+  - ALTER POLICY
+  - DROP POLICY
+  - ALTER TABLE
+
+metadata:
+  source_page: 1733

@@ -1,0 +1,28 @@
+skillid: pg_drop_role
+name: DROP ROLE
+category: DDL
+subcategory: drop
+
+description:
+  brief: "Remove a database role"
+  detailed: "DROP ROLE removes a role. Role must not own any objects or have any memberships."
+
+syntax:
+  primary: "DROP ROLE [ IF EXISTS ] name [, ...]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "Do not error if role doesn't exist"
+
+notes:
+  - "Must remove dependent objects first"
+  - "Cannot drop role that owns objects"
+
+related_commands:
+  - skillid: pg_create_role
+  - skillid: pg_alter_role
+  - skillid: pg_drop_owned
+
+metadata:
+  source_page: 1875

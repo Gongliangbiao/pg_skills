@@ -1,0 +1,32 @@
+skillid: pg_drop_schema
+name: DROP SCHEMA
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个模式"
+
+syntax:
+  primary: "DROP SCHEMA [ IF EXISTS ] name [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果模式不存在"
+  - name: "name"
+    description: "要删除的模式的名称（可指定多个）"
+  - name: "CASCADE"
+    description: "自动删除模式中包含的所有对象及其依赖对象"
+  - name: "RESTRICT"
+    description: "如果模式包含任何对象则拒绝删除，这是默认行为"
+
+notes:
+  - "只有模式的拥有者或超级用户才能删除模式"
+  - "模式的拥有者可以删除模式（及其所有对象），即使不拥有其中的某些对象"
+
+related_commands:
+  - skillid: pg_create_schema
+  - skillid: pg_alter_schema
+
+metadata:
+  source_page: 1879

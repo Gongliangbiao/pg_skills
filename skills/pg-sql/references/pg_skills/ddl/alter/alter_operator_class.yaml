@@ -1,0 +1,47 @@
+skillid: pg_alter_operator_class
+name: ALTER OPERATOR CLASS
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an operator class"
+  detailed: |
+    ALTER OPERATOR CLASS changes the definition of an operator class.
+    You must own the operator class to use ALTER OPERATOR CLASS.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the operator class's schema.
+
+syntax:
+  primary: |
+    ALTER OPERATOR CLASS name USING index_method
+        RENAME TO new_name
+    ALTER OPERATOR CLASS name USING index_method
+        OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER OPERATOR CLASS name USING index_method
+        SET SCHEMA new_schema
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing operator class"
+    pg_specific: true
+  - name: "index_method"
+    description: "The name of the index method this operator class is for"
+    pg_specific: true
+  - name: "new_name"
+    description: "The new name of the operator class"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the operator class"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the operator class"
+    pg_specific: false
+
+related_commands:
+  - skillid: pg_create_operator_class
+  - skillid: pg_drop_operator_class
+  - skillid: pg_alter_operator_family
+
+metadata:
+  source_page: 1565
+  doc_version: "PostgreSQL 16.4"

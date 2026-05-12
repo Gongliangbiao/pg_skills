@@ -1,0 +1,55 @@
+skillid: pg_alter_foreign_data_wrapper
+name: ALTER FOREIGN DATA WRAPPER
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a foreign-data wrapper"
+  detailed: |
+    ALTER FOREIGN DATA WRAPPER changes the definition of a foreign-data wrapper.
+    The first form changes the support functions or generic options.
+    The second form changes the owner of the foreign-data wrapper.
+    Only superusers can alter foreign-data wrappers. Only superusers can own foreign-data wrappers.
+
+syntax:
+  primary: |
+    ALTER FOREIGN DATA WRAPPER name
+        [ HANDLER handler_function | NO HANDLER ]
+        [ VALIDATOR validator_function | NO VALIDATOR ]
+        [ OPTIONS ( [ ADD | SET | DROP ] option ['value'] [, ... ]) ]
+    ALTER FOREIGN DATA WRAPPER name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER FOREIGN DATA WRAPPER name RENAME TO new_name
+
+key_parameters:
+  - name: "name"
+    description: "The name of an existing foreign-data wrapper"
+    pg_specific: true
+  - name: "HANDLER handler_function"
+    description: "Specifies a new handler function for the foreign-data wrapper"
+    pg_specific: true
+  - name: "NO HANDLER"
+    description: "Specify that the foreign-data wrapper should no longer have a handler function"
+    pg_specific: true
+  - name: "VALIDATOR validator_function"
+    description: "Specifies a new validator function for the foreign-data wrapper"
+    pg_specific: true
+  - name: "NO VALIDATOR"
+    description: "Specify that the foreign-data wrapper should no longer have a validator function"
+    pg_specific: true
+  - name: "OPTIONS"
+    description: "Change options for the foreign-data wrapper (ADD, SET, DROP)"
+    pg_specific: true
+  - name: "new_owner"
+    description: "The user name of the new owner of the foreign-data wrapper (must be superuser)"
+    pg_specific: true
+  - name: "new_name"
+    description: "The new name for the foreign-data wrapper"
+    pg_specific: true
+
+related_commands:
+  - skillid: pg_create_foreign_data_wrapper
+  - skillid: pg_drop_foreign_data_wrapper
+
+metadata:
+  source_page: 1544
+  doc_version: "PostgreSQL 16.4"

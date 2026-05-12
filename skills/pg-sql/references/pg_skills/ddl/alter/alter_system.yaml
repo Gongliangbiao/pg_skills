@@ -1,0 +1,28 @@
+skillid: pg_alter_system
+name: ALTER SYSTEM
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改服务器配置参数，将设置写入postgresql.auto.conf文件"
+
+syntax:
+  primary: "ALTER SYSTEM SET configuration_parameter { TO | = } { value [, ...] | DEFAULT }\nALTER SYSTEM RESET configuration_parameter\nALTER SYSTEM RESET ALL"
+
+key_parameters:
+  - name: configuration_parameter
+    description: "可设置的配置参数名称"
+  - name: value
+    description: "参数的新值，可以是字符串常量、标识符、数字或逗号分隔列表"
+  - name: DEFAULT
+    description: "将参数设置为默认值，即从postgresql.auto.conf中删除"
+
+related_commands:
+  - SET
+  - SHOW
+  - ALTER DATABASE
+  - ALTER ROLE
+
+metadata:
+  source_page: 1596
+  doc_version: "PostgreSQL 16.4"

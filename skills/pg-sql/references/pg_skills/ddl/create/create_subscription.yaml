@@ -1,0 +1,36 @@
+skillid: pg_create_subscription
+name: CREATE SUBSCRIPTION
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new subscription for logical replication"
+
+syntax:
+  primary: "CREATE SUBSCRIPTION subscription_name CONNECTION 'conninfo' PUBLICATION publication_name [, ...] [ WITH ( subscription_parameter [= value] [, ...] ) ]"
+
+key_parameters:
+  - name: subscription_name
+    description: "The name of the new subscription"
+  - name: CONNECTION 'conninfo'
+    description: "The libpq connection string defining how to connect to the publisher database"
+  - name: PUBLICATION publication_name
+    description: "Names of the publications on the publisher to subscribe to"
+  - name: connect
+    description: "Specifies whether the command should connect to the publisher. Default is true"
+  - name: create_slot
+    description: "Specifies whether to create the replication slot on the publisher. Default is true"
+  - name: enabled
+    description: "Specifies whether the subscription should be actively replicating. Default is true"
+  - name: binary
+    description: "Specifies whether to request data in binary format. Default is false"
+  - name: streaming
+    description: "Specifies whether to enable streaming of in-progress transactions: off, on, or parallel"
+
+related_commands:
+  - ALTER SUBSCRIPTION
+  - DROP SUBSCRIPTION
+  - CREATE PUBLICATION
+
+metadata:
+  source_page: 1768

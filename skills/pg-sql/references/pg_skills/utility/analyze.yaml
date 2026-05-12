@@ -1,0 +1,35 @@
+skillid: pg_analyze
+name: ANALYZE
+category: Utility
+
+description:
+  brief: "Collect statistics about a database"
+  detailed: "ANALYZE collects statistics about the contents of tables for use by the query planner. It samples rows and stores column statistics."
+
+syntax:
+  primary: |
+    ANALYZE [ VERBOSE ] [ table_name [, ... ] ] [ ( column_name [, ...] ) ]
+
+key_parameters:
+  - name: "VERBOSE"
+    description: "Show progress information"
+  - name: "table_name"
+    description: "Specific table, or all tables if omitted"
+  - name: "column_name"
+    description: "Specific columns to analyze"
+
+notes:
+  - "Usually run by autovacuum"
+  - "Critical for query optimization"
+
+examples:
+  basic:
+    - code: "ANALYZE;"
+    - code: "ANALYZE users;"
+
+related_commands:
+  - skillid: pg_vacuum
+  - skillid: pg_explain
+
+metadata:
+  source_page: 1635

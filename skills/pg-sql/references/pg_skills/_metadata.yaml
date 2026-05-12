@@ -1,0 +1,105 @@
+# PostgreSQL 16.4 Skills Metadata
+# Schema Version: 1.0.0 (skillsmp.com compatible)
+# Generated: 2026-05-05
+
+source:
+  document: "PostgreSQL 16.4 Documentation"
+  file: "j2ul-2965-02enz0.pdf"
+  chapters:
+    - "Part I. SQL Commands (pages 1516-2024)"
+    - "Chapter 13. Concurrency Control (pages 486-501)"
+
+version_info:
+  postgresql_version: "16.4"
+  schema_version: "1.0.0"
+  extraction_date: "2026-05-05"
+
+# 标准Skill格式规范
+schema:
+  required_fields:
+    - name          # 命令名称（大写）
+    - description   # 功能简述（一句话）
+
+  recommended_fields:
+    - version       # 版本号
+    - category      # 分类
+    - subcategory   # 子分类（DDL专用）
+    - pg_specific   # PostgreSQL特有标记
+
+  content_fields:
+    - syntax        # 语法定义（primary + variants）
+    - parameters    # 结构化参数列表
+    - options       # 可选项/修饰符
+    - examples      # basic + advanced示例
+    - notes         # 注意事项
+    - errors        # 常见错误
+    - related       # 相关命令
+    - compatibility # 兼容性信息
+
+  metadata_fields:
+    - source_page   # 原文档页码
+    - doc_version   # 文档版本
+    - priority      # 重要程度
+    - frequency     # 使用频率
+
+category_definitions:
+  DDL: "Data Definition Language - 定义/修改数据库结构"
+  DML: "Data Manipulation Language - 查询/插入/更新/删除数据"
+  DCL: "Data Control Language - 授予/撤销权限"
+  TCL: "Transaction Control Language - 事务控制命令"
+  Utility: "Utility Commands - 分析/维护/管理等辅助命令"
+  Concurrency: "Concurrency Control - 并发控制概念与机制"
+
+parameter_types:
+  keyword: "关键字/保留字"
+  identifier: "标识符（名称）"
+  expression: "表达式"
+  clause: "子句/语法块"
+  type_name: "类型名称"
+  compound: "复合结构"
+
+priority_levels:
+  high: "核心高频命令，必须掌握"
+  medium: "常用命令，应了解"
+  low: "特殊场景命令，按需学习"
+
+frequency_levels:
+  frequent: "日常频繁使用"
+  common: "常见使用场景"
+  rare: "特殊或高级场景"
+
+pg_specific_marking:
+  purpose: "标识PostgreSQL特有功能，非SQL标准"
+  common_examples:
+    - "IF NOT EXISTS"
+    - "UNLOGGED tables"
+    - "PARTITION BY"
+    - "DISTINCT ON"
+    - "RETURNING clause"
+    - "ON CONFLICT (Upsert)"
+    - "GENERATED STORED"
+    - "EXCLUDE constraints"
+    - "LIMIT/OFFSET"
+
+usage_notes:
+  - "每个YAML文件代表一个技能/命令"
+  - "语法保留PostgreSQL完整特性"
+  - "参数采用结构化列表格式"
+  - "示例保留原文档内容"
+  - "相关命令通过name字段关联"
+
+file_structure:
+  root: pg_skills/
+  indices:
+    - _index.yaml      # 全局索引
+    - _metadata.yaml   # 本文件
+    - _schema.yaml     # 格式规范
+  categories:
+    - ddl/alter/       # ALTER命令
+    - ddl/create/      # CREATE命令
+    - ddl/drop/        # DROP命令
+    - dml/             # DML命令
+    - dcl/             # DCL命令
+    - tcl/             # TCL命令
+    - utility/         # Utility命令
+    - concurrency/     # 并发控制

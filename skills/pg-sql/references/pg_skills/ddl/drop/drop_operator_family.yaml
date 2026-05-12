@@ -1,0 +1,35 @@
+skillid: pg_drop_operator_family
+name: DROP OPERATOR FAMILY
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个运算符族"
+
+syntax:
+  primary: "DROP OPERATOR FAMILY [ IF EXISTS ] name USING index_method [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果运算符族不存在"
+  - name: "name"
+    description: "要删除的运算符族的名称"
+  - name: "index_method"
+    description: "索引方法的名称（如btree、hash等）"
+  - name: "CASCADE"
+    description: "自动删除依赖该运算符族的对象（如使用该族中运算符类的索引）"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "必须拥有运算符族才能删除它"
+  - "DROP OPERATOR FAMILY会删除族中包含的所有运算符类"
+
+related_commands:
+  - skillid: pg_create_operator_family
+  - skillid: pg_alter_operator_family
+  - skillid: pg_drop_operator_class
+
+metadata:
+  source_page: 1868

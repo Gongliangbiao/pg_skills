@@ -1,0 +1,26 @@
+skillid: pg_alter_rule
+name: ALTER RULE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改规则定义，目前仅支持更改规则名称"
+
+syntax:
+  primary: "ALTER RULE name ON table_name RENAME TO new_name"
+
+key_parameters:
+  - name: name
+    description: "要修改的现有规则名称"
+  - name: table_name
+    description: "规则应用的表或视图名称（可选模式限定）"
+  - name: new_name
+    description: "规则的新名称"
+
+related_commands:
+  - CREATE RULE
+  - DROP RULE
+
+metadata:
+  source_page: 1585
+  doc_version: "PostgreSQL 16.4"

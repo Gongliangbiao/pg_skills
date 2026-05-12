@@ -1,0 +1,31 @@
+skillid: pg_drop_collation
+name: DROP COLLATION
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个排序规则"
+
+syntax:
+  primary: "DROP COLLATION [ IF EXISTS ] name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果排序规则不存在"
+  - name: "name"
+    description: "要删除的排序规则的名称"
+  - name: "CASCADE"
+    description: "自动删除依赖该排序规则的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "要删除排序规则，必须拥有该排序规则"
+
+related_commands:
+  - skillid: pg_create_collation
+  - skillid: pg_alter_collation
+
+metadata:
+  source_page: 1849

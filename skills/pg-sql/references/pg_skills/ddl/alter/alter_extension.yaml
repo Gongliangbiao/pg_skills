@@ -1,0 +1,47 @@
+skillid: pg_alter_extension
+name: ALTER EXTENSION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an extension"
+  detailed: |
+    ALTER EXTENSION changes the definition of an installed extension. There are several subforms:
+    - UPDATE: Update the extension to a newer version
+    - SET SCHEMA: Move the extension's objects into another schema
+    - ADD member_object: Add an existing object to the extension
+    - DROP member_object: Remove a member object from the extension
+    You must own the extension to use ALTER EXTENSION.
+
+syntax:
+  primary: |
+    ALTER EXTENSION name UPDATE [ TO new_version ]
+    ALTER EXTENSION name SET SCHEMA new_schema
+    ALTER EXTENSION name ADD member_object
+    ALTER EXTENSION name DROP member_object
+
+key_parameters:
+  - name: "name"
+    description: "The name of an installed extension"
+    pg_specific: true
+  - name: "new_version"
+    description: "The desired new version of the extension (identifier or string literal)"
+    pg_specific: true
+  - name: "new_schema"
+    description: "The new schema for the extension (extension must be relocatable)"
+    pg_specific: true
+  - name: "member_object"
+    description: "Object to add/remove from extension (ACCESS METHOD, AGGREGATE, CAST, COLLATION, etc.)"
+    pg_specific: true
+
+notes:
+  - "ADD/DROP forms require ownership of the added/dropped object as well"
+  - "Objects added to extension can only be dropped by dropping the extension"
+
+related_commands:
+  - skillid: pg_create_extension
+  - skillid: pg_drop_extension
+
+metadata:
+  source_page: 1540
+  doc_version: "PostgreSQL 16.4"

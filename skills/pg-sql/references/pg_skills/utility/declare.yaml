@@ -1,0 +1,31 @@
+skillid: pg_declare
+name: DECLARE
+category: Utility
+
+description:
+  brief: "定义一个游标"
+
+syntax:
+  primary: "DECLARE name [ BINARY ] [ ASENSITIVE | INSENSITIVE ] [ [ NO ] SCROLL ]\n    CURSOR [ { WITH | WITHOUT } HOLD ] FOR query"
+
+key_parameters:
+  - name: "name"
+    description: "游标的名称"
+  - name: "BINARY"
+    description: "游标以二进制格式返回数据"
+  - name: "ASENSITIVE | INSENSITIVE"
+    description: "游标对数据更新的敏感性"
+  - name: "SCROLL | NO SCROLL"
+    description: "游标是否可以向后滚动"
+  - name: "WITH HOLD | WITHOUT HOLD"
+    description: "游标是否可以在提交事务后继续存在"
+  - name: "query"
+    description: "查询语句"
+
+related_commands:
+  - "CLOSE"
+  - "FETCH"
+  - "MOVE"
+
+metadata:
+  source_page: 1835

@@ -1,0 +1,22 @@
+skillid: pg_execute
+name: EXECUTE
+category: Utility
+
+description:
+  brief: "执行一个预备语句"
+
+syntax:
+  primary: "EXECUTE name [ ( parameter [, ...] ) ]"
+
+key_parameters:
+  - name: "name"
+    description: "要执行的预备语句的名称"
+  - name: "parameter"
+    description: "预备语句参数的实际值"
+
+related_commands:
+  - "DEALLOCATE"
+  - "PREPARE"
+
+metadata:
+  source_page: 1898

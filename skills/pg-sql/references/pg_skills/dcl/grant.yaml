@@ -1,0 +1,109 @@
+skillid: pg_grant
+name: GRANT
+category: DCL
+
+description:
+  brief: "Define access privileges"
+  detailed: |
+    GRANT defines access privileges. The GRANT command is used to confer
+    specific privileges on a database object (table, sequence, database, etc.)
+    to one or more roles.
+
+    Privileges can be: SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES,
+    TRIGGER, CREATE, CONNECT, TEMPORARY, EXECUTE, USAGE, ALL PRIVILEGES.
+
+syntax:
+  primary: |
+    GRANT { { SELECT | INSERT | UPDATE | DELETE | TRUNCATE | REFERENCES | TRIGGER }
+            [, ...] | ALL [ PRIVILEGES ] }
+    ON { table_name [, ...] | ALL TABLES IN SCHEMA schema_name [, ...] }
+    TO { [ GROUP ] role_name | PUBLIC } [, ...] [ WITH GRANT OPTION ]
+
+    GRANT { { USAGE | SELECT | UPDATE }
+            [, ...] | ALL [ PRIVILEGES ] }
+    ON { SEQUENCE sequence_name [, ...] | ALL SEQUENCES IN SCHEMA schema_name [, ...] }
+    TO { [ GROUP ] role_name | PUBLIC } [, ...] [ WITH GRANT OPTION ]
+
+    GRANT { { CREATE | CONNECT | TEMPORARY | TEMP }
+            [, ...] | ALL [ PRIVILEGES ] }
+    ON DATABASE database_name [, ...]
+    TO { [ GROUP ] role_name | PUBLIC } [, ...] [ WITH GRANT OPTION ]
+
+    GRANT { USAGE | ALL [ PRIVILEGES ] }
+    ON SCHEMA schema_name [, ...]
+    TO { [ GROUP ] role_name | PUBLIC } [, ...] [ WITH GRANT OPTION ]
+
+    GRANT { EXECUTE | ALL [ PRIVILEGES ] }
+    ON { FUNCTION function_name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] [, ...]
+         | ALL FUNCTIONS IN SCHEMA schema_name [, ...] }
+    TO { [ GROUP ] role_name | PUBLIC } [, ...] [ WITH GRANT OPTION ]
+
+key_parameters:
+  - name: "privilege"
+    type: "keyword"
+    required: true
+    description: "Type of privilege to grant (SELECT, INSERT, UPDATE, DELETE, etc.)"
+  - name: "ALL [ PRIVILEGES ]"
+    type: "keyword"
+    required: false
+    description: "Grant all applicable privileges"
+  - name: "ON object"
+    type: "clause"
+    required: true
+    description: "Target object (table, sequence, database, schema, function)"
+  - name: "TO role_name"
+    type: "identifier"
+    required: true
+    description: "Role receiving the privilege. PUBLIC grants to all roles."
+  - name: "WITH GRANT OPTION"
+    type: "keyword"
+    required: false
+    description: "Recipient can grant privilege to others"
+
+notes:
+  prerequisites:
+    - "Grantor must own object or have GRANT OPTION"
+  best_practices:
+    - "Use role groups instead of PUBLIC for better security"
+    - "Be careful with WITH GRANT OPTION"
+  warnings:
+    - "PUBLIC grants affect all users"
+
+examples:
+  basic:
+    - title: "Grant table access"
+      code: |
+        GRANT SELECT, INSERT ON users TO analyst_role;
+      explanation: "Allow analyst_role to read and insert users"
+    - title: "Grant all privileges"
+      code: |
+        GRANT ALL PRIVILEGES ON TABLE orders TO manager_role;
+      explanation: "Full access to orders table"
+  advanced:
+    - title: "Grant with option to delegate"
+      code: |
+        GRANT SELECT ON ALL TABLES IN SCHEMA public TO reader_role
+        WITH GRANT OPTION;
+      explanation: "Grant read access to all tables with delegation right"
+    - title: "Grant to public"
+      code: |
+        GRANT EXECUTE ON FUNCTION calculate_total() TO PUBLIC;
+      explanation: "Anyone can execute this function"
+
+related_commands:
+  - skillid: pg_revoke
+    relationship: "Remove privileges"
+  - skillid: pg_alter_default_privileges
+    relationship: "Set default privileges for new objects"
+
+compatibility:
+  sql_standard: true
+  notes: |
+    SQL standard supports GRANT.
+    PostgreSQL extends with ALL TABLES/SEQUENCES/FUNCTIONS IN SCHEMA syntax.
+
+metadata:
+  source_page: 1909
+  doc_version: "PostgreSQL 16.4"
+  priority: high
+  frequency: frequent

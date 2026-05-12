@@ -1,0 +1,84 @@
+# PostgreSQL 16.4 Concurrency Control Skills Index
+# Chapter 13: Concurrency Control
+# Generated: 2026-05-05
+
+skills_count: 9
+source_chapter: "Chapter 13. Concurrency Control"
+source_pages: "486-501"
+
+skills_list:
+  - skillid: pg_mvcc
+    name: MVCC (Multiversion Concurrency Control)
+    file: concurrency/mvcc.yaml
+    priority: high
+    description: "多版本并发控制核心概念"
+
+  - skillid: pg_transaction_isolation
+    name: Transaction Isolation Levels
+    file: concurrency/transaction_isolation.yaml
+    priority: high
+    description: "四种事务隔离级别详解"
+
+  - skillid: pg_table_locks
+    name: Table-Level Locks
+    file: concurrency/table_locks.yaml
+    priority: high
+    description: "八种表级锁模式及冲突矩阵"
+
+  - skillid: pg_row_locks
+    name: Row-Level Locks
+    file: concurrency/row_locks.yaml
+    priority: high
+    description: "四种行级锁模式及用法"
+
+  - skillid: pg_deadlock
+    name: Deadlock Detection and Handling
+    file: concurrency/deadlock.yaml
+    priority: high
+    description: "死锁检测、预防与重试策略"
+
+  - skillid: pg_advisory_locks
+    name: Advisory Locks
+    file: concurrency/advisory_locks.yaml
+    priority: medium
+    description: "应用定义的建议性锁"
+
+  - skillid: pg_serialization_failure
+    name: Serialization Failure Handling
+    file: concurrency/serialization_failure.yaml
+    priority: high
+    description: "序列化失败错误处理"
+
+  - skillid: pg_locking_indexes
+    name: Locking and Indexes
+    file: concurrency/locking_indexes.yaml
+    priority: medium
+    description: "不同索引类型的锁定行为"
+
+  - skillid: pg_concurrency_best_practices
+    name: Concurrency Control Best Practices
+    file: concurrency/best_practices.yaml
+    priority: high
+    description: "并发控制最佳实践汇总"
+
+topic_summary:
+  core_concepts:
+    - "MVCC多版本模型"
+    - "事务隔离级别"
+    - "快照可见性"
+
+  locking_mechanisms:
+    - "表级锁（8种模式）"
+    - "行级锁（4种模式）"
+    - "页级锁"
+    - "Advisory锁"
+
+  error_handling:
+    - "死锁检测（40P01）"
+    - "序列化失败（40001）"
+    - "重试策略"
+
+  performance:
+    - "索引锁定行为"
+    - "并发优化建议"
+    - "配置参数"

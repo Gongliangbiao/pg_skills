@@ -1,0 +1,34 @@
+skillid: pg_alter_type
+name: ALTER TYPE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改类型的定义，包括所有者、名称、模式、属性、枚举值等"
+
+syntax:
+  primary: "ALTER TYPE name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER TYPE name RENAME TO new_name\nALTER TYPE name SET SCHEMA new_schema\nALTER TYPE name RENAME ATTRIBUTE attribute_name TO new_attribute_name [ CASCADE | RESTRICT ]\nALTER TYPE name action [, ... ]\nALTER TYPE name ADD VALUE [ IF NOT EXISTS ] new_enum_value [ { BEFORE | AFTER } neighbor_enum_value ]\nALTER TYPE name RENAME VALUE existing_enum_value TO new_enum_value\nALTER TYPE name SET ( property = value [, ... ] )\n\nwhere action is one of:\n    ADD ATTRIBUTE attribute_name data_type [ COLLATE collation ] [ CASCADE | RESTRICT ]\n    DROP ATTRIBUTE [ IF EXISTS ] attribute_name [ CASCADE | RESTRICT ]\n    ALTER ATTRIBUTE attribute_name [ SET DATA ] TYPE data_type [ COLLATE collation ] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: name
+    description: "要修改的现有类型名称（可选模式限定）"
+  - name: new_name
+    description: "类型的新名称"
+  - name: new_owner
+    description: "类型的新所有者"
+  - name: new_schema
+    description: "类型的新模式"
+  - name: attribute_name
+    description: "复合类型的属性名称"
+  - name: new_enum_value
+    description: "要添加的枚举值"
+  - name: existing_enum_value
+    description: "要重命名的现有枚举值"
+
+related_commands:
+  - CREATE TYPE
+  - DROP TYPE
+
+metadata:
+  source_page: 1626
+  doc_version: "PostgreSQL 16.4"

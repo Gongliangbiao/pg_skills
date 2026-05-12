@@ -1,0 +1,25 @@
+skillid: pg_abort
+name: ABORT
+category: TCL
+
+description:
+  brief: "中止当前事务"
+
+syntax:
+  primary: "ABORT [ WORK | TRANSACTION ] [ AND [ NO ] CHAIN ]"
+
+key_parameters:
+  - name: "WORK"
+    description: "可选关键字，无效果"
+  - name: "TRANSACTION"
+    description: "可选关键字，无效果"
+  - name: "AND CHAIN"
+    description: "如果指定，立即启动具有相同事务特性的新事务"
+
+related_commands:
+  - "BEGIN"
+  - "COMMIT"
+  - "ROLLBACK"
+
+metadata:
+  source_page: 1520

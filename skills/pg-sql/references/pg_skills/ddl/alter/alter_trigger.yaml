@@ -1,0 +1,29 @@
+skillid: pg_alter_trigger
+name: ALTER TRIGGER
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改触发器的定义，包括名称和扩展依赖关系"
+
+syntax:
+  primary: "ALTER TRIGGER name ON table_name RENAME TO new_name\nALTER TRIGGER name ON table_name [ NO ] DEPENDS ON EXTENSION extension_name"
+
+key_parameters:
+  - name: name
+    description: "要修改的现有触发器名称"
+  - name: table_name
+    description: "触发器作用的表名称"
+  - name: new_name
+    description: "触发器的新名称"
+  - name: extension_name
+    description: "触发器依赖的扩展名称，NO表示取消依赖"
+
+related_commands:
+  - CREATE TRIGGER
+  - DROP TRIGGER
+  - ALTER TABLE
+
+metadata:
+  source_page: 1624
+  doc_version: "PostgreSQL 16.4"

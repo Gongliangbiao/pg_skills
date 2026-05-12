@@ -1,0 +1,49 @@
+skillid: pg_alter_event_trigger
+name: ALTER EVENT TRIGGER
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an event trigger"
+  detailed: |
+    ALTER EVENT TRIGGER changes properties of an existing event trigger.
+    You must be superuser to alter an event trigger.
+    The command can enable, disable, or rename a trigger, or change its owner.
+
+syntax:
+  primary: |
+    ALTER EVENT TRIGGER name DISABLE
+    ALTER EVENT TRIGGER name ENABLE [ REPLICA | ALWAYS ]
+    ALTER EVENT TRIGGER name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER EVENT TRIGGER name RENAME TO new_name
+
+key_parameters:
+  - name: "name"
+    description: "The name of an existing trigger to alter"
+    pg_specific: true
+  - name: "new_owner"
+    description: "The user name of the new owner of the event trigger"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name of the event trigger"
+    pg_specific: false
+  - name: "DISABLE"
+    description: "Disable the trigger - it will not execute when its triggering event occurs"
+    pg_specific: true
+  - name: "ENABLE"
+    description: "Enable the trigger - it will execute when its triggering event occurs"
+    pg_specific: true
+  - name: "ENABLE REPLICA"
+    description: "Trigger fires only in replica mode (for logical replication)"
+    pg_specific: true
+  - name: "ENABLE ALWAYS"
+    description: "Trigger fires regardless of session_replication_role setting"
+    pg_specific: true
+
+related_commands:
+  - skillid: pg_create_event_trigger
+  - skillid: pg_drop_event_trigger
+
+metadata:
+  source_page: 1539
+  doc_version: "PostgreSQL 16.4"

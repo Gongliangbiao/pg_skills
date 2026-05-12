@@ -1,0 +1,26 @@
+skillid: pg_security_label
+name: SECURITY LABEL
+category: DCL
+
+description:
+  brief: "定义或更改应用于对象的安全标签"
+
+syntax:
+  primary: "SECURITY LABEL [ FOR provider ] ON\n{\n   TABLE object_name |\n   COLUMN table_name.column_name |\n   AGGREGATE aggregate_name ( aggregate_signature ) |\n   DATABASE object_name |\n   DOMAIN object_name |\n   EVENT TRIGGER object_name |\n   FOREIGN TABLE object_name |\n   FUNCTION function_name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] |\n   LARGE OBJECT large_object_oid |\n   MATERIALIZED VIEW object_name |\n   [ PROCEDURAL ] LANGUAGE object_name |\n   PROCEDURE procedure_name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] |\n   PUBLICATION object_name |\n   ROLE object_name |\n   ROUTINE routine_name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] |\n   SCHEMA object_name |\n   SEQUENCE object_name |\n   SUBSCRIPTION object_name |\n   TABLESPACE object_name |\n   TYPE object_name |\n   VIEW object_name\n} IS { string_literal | NULL }"
+
+key_parameters:
+  - name: "provider"
+    description: "标签提供者的名称"
+  - name: "object_name"
+    description: "对象的名称"
+  - name: "string_literal"
+    description: "安全标签的内容"
+  - name: "NULL"
+    description: "删除安全标签"
+
+related_commands:
+  - "GRANT"
+  - "REVOKE"
+
+metadata:
+  source_page: 1969

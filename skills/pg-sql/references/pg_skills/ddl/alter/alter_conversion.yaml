@@ -1,0 +1,40 @@
+skillid: pg_alter_conversion
+name: ALTER CONVERSION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a conversion"
+  detailed: |
+    ALTER CONVERSION changes the definition of a conversion.
+    You must own the conversion to use ALTER CONVERSION.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the conversion's schema.
+
+syntax:
+  primary: |
+    ALTER CONVERSION name RENAME TO new_name
+    ALTER CONVERSION name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER CONVERSION name SET SCHEMA new_schema
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing conversion"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name of the conversion"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the conversion"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the conversion"
+    pg_specific: false
+
+related_commands:
+  - skillid: pg_create_conversion
+  - skillid: pg_drop_conversion
+
+metadata:
+  source_page: 1526
+  doc_version: "PostgreSQL 16.4"

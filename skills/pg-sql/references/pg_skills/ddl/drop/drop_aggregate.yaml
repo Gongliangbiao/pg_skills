@@ -1,0 +1,35 @@
+skillid: pg_drop_aggregate
+name: DROP AGGREGATE
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除现有的聚合函数"
+
+syntax:
+  primary: "DROP AGGREGATE [ IF EXISTS ] name ( aggregate_signature ) [, ...] [ CASCADE | RESTRICT ]"
+  aggregate_signature: "* | [ argmode ] [ argname ] argtype [ , ... ] | [ [ argmode ] [ argname ] argtype [ , ... ] ] ORDER BY [ argmode ] [ argname ] argtype [ , ... ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果聚合函数不存在"
+  - name: "name"
+    description: "要删除的聚合函数的名称"
+  - name: "argmode"
+    description: "参数模式：IN 或 VARIADIC，默认为 IN"
+  - name: "argname"
+    description: "参数名称（注意DROP AGGREGATE不关注参数名称）"
+  - name: "argtype"
+    description: "聚合函数参数的数据类型"
+  - name: "CASCADE"
+    description: "自动删除依赖该聚合函数的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+related_commands:
+  - skillid: pg_create_aggregate
+  - skillid: pg_alter_aggregate
+
+metadata:
+  source_page: 1846

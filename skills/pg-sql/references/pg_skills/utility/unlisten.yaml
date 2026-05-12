@@ -1,0 +1,22 @@
+skillid: pg_unlisten
+name: UNLISTEN
+category: Utility
+
+description:
+  brief: "停止监听一个通知"
+
+syntax:
+  primary: "UNLISTEN { channel | * }"
+
+key_parameters:
+  - name: "channel"
+    description: "通知通道的名称"
+  - name: "*"
+    description: "清除当前会话的所有监听注册"
+
+related_commands:
+  - "LISTEN"
+  - "NOTIFY"
+
+metadata:
+  source_page: 2012

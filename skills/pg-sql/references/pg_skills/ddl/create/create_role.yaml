@@ -1,0 +1,43 @@
+skillid: pg_create_role
+name: CREATE ROLE
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new database role"
+  detailed: "CREATE ROLE adds a new role to PostgreSQL database cluster. A role can be a user or a group depending on configuration."
+
+syntax:
+  primary: |
+    CREATE ROLE name [ [ WITH ] option [ ... ] ]
+
+key_parameters:
+  - name: "name"
+    description: "Role name"
+  - name: "SUPERUSER/NOSUPERUSER"
+    description: "Superuser privileges"
+  - name: "CREATEDB/NOCREATEDB"
+    description: "Can create databases"
+  - name: "CREATEROLE/NOCREATEROLE"
+    description: "Can create roles"
+  - name: "INHERIT/NOINHERIT"
+    pg_specific: true
+    description: "Inherits privileges from roles it belongs to"
+  - name: "LOGIN/NOLOGIN"
+    description: "Can login"
+  - name: "PASSWORD"
+    description: "Password (optional)"
+
+examples:
+  basic:
+    - code: "CREATE ROLE analyst;"
+    - code: "CREATE ROLE admin WITH SUPERUSER CREATEDB LOGIN PASSWORD 'secret';"
+
+related_commands:
+  - skillid: pg_alter_role
+  - skillid: pg_drop_role
+  - skillid: pg_create_user
+  - skillid: pg_grant
+
+metadata:
+  source_page: 1747

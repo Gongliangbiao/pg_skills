@@ -1,0 +1,34 @@
+skillid: pg_drop_subscription
+name: DROP SUBSCRIPTION
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个订阅"
+
+syntax:
+  primary: "DROP SUBSCRIPTION [ IF EXISTS ] name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果订阅不存在"
+  - name: "name"
+    description: "要删除的订阅的名称"
+  - name: "CASCADE"
+    description: "此选项对订阅无实际效果"
+  - name: "RESTRICT"
+    description: "此选项对订阅无实际效果，是默认行为"
+
+notes:
+  - "要执行此命令，必须是订阅的拥有者"
+  - "如果订阅关联了远程主机上的复制槽，DROP SUBSCRIPTION会尝试删除远程复制槽"
+  - "如果订阅关联了复制槽，不能在事务块内执行DROP SUBSCRIPTION"
+  - "可使用ALTER SUBSCRIPTION先取消复制槽关联"
+
+related_commands:
+  - skillid: pg_create_subscription
+  - skillid: pg_alter_subscription
+
+metadata:
+  source_page: 1883

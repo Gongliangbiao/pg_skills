@@ -1,0 +1,27 @@
+skillid: pg_set_constraints
+name: SET CONSTRAINTS
+category: TCL
+
+description:
+  brief: "为当前事务设置约束检查时机"
+
+syntax:
+  primary: "SET CONSTRAINTS { ALL | name [, ...] } { DEFERRED | IMMEDIATE }"
+
+key_parameters:
+  - name: "ALL"
+    description: "更改所有可延迟约束的模式"
+  - name: "name"
+    description: "约束名称"
+  - name: "DEFERRED"
+    description: "约束在事务提交时检查"
+  - name: "IMMEDIATE"
+    description: "约束在每个语句结束时检查"
+
+related_commands:
+  - "BEGIN"
+  - "COMMIT"
+  - "SET TRANSACTION"
+
+metadata:
+  source_page: 1999

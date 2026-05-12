@@ -1,0 +1,25 @@
+skillid: pg_fetch
+name: FETCH
+category: Utility
+
+description:
+  brief: "使用游标从查询中检索行"
+
+syntax:
+  primary: "FETCH [ direction ] [ FROM | IN ] cursor_name\n\nwhere direction can be one of:\n    NEXT\n    PRIOR\n    FIRST\n    LAST\n    ABSOLUTE count\n    RELATIVE count\n    count\n    ALL\n    FORWARD\n    FORWARD count\n    FORWARD ALL\n    BACKWARD\n    BACKWARD count\n    BACKWARD ALL"
+
+key_parameters:
+  - name: "direction"
+    description: "获取方向"
+  - name: "cursor_name"
+    description: "游标名称"
+  - name: "count"
+    description: "要获取的行数"
+
+related_commands:
+  - "CLOSE"
+  - "DECLARE"
+  - "MOVE"
+
+metadata:
+  source_page: 1905

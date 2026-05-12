@@ -1,0 +1,32 @@
+skillid: pg_alter_policy
+name: ALTER POLICY
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改行级安全策略的定义，包括策略应用的角色以及USING和WITH CHECK表达式"
+
+syntax:
+  primary: "ALTER POLICY name ON table_name RENAME TO new_name\nALTER POLICY name ON table_name\n    [ TO { role_name | PUBLIC | CURRENT_ROLE | CURRENT_USER | SESSION_USER } [, ...] ]\n    [ USING ( using_expression ) ]\n    [ WITH CHECK ( check_expression ) ]"
+
+key_parameters:
+  - name: name
+    description: "要修改的现有策略名称"
+  - name: table_name
+    description: "策略所在表的名称（可选模式限定）"
+  - name: new_name
+    description: "策略的新名称"
+  - name: role_name
+    description: "策略适用的角色，多个角色可同时指定，PUBLIC表示所有角色"
+  - name: using_expression
+    description: "策略的USING表达式，用于可见性控制"
+  - name: check_expression
+    description: "策略的WITH CHECK表达式，用于插入/更新控制"
+
+related_commands:
+  - CREATE POLICY
+  - DROP POLICY
+
+metadata:
+  source_page: 1571
+  doc_version: "PostgreSQL 16.4"

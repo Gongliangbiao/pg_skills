@@ -1,0 +1,23 @@
+skillid: pg_start_transaction
+name: START TRANSACTION
+category: TCL
+
+description:
+  brief: "Start a transaction block"
+  detailed: "START TRANSACTION begins a new transaction block. Equivalent to BEGIN command, following SQL standard syntax."
+
+syntax:
+  primary: "START TRANSACTION [ transaction_mode [, ...] ]"
+
+transaction_modes:
+  - "ISOLATION LEVEL { READ COMMITTED | REPEATABLE READ | SERIALIZABLE }"
+  - "READ WRITE | READ ONLY"
+  - "[ NOT ] DEFERRABLE"
+
+related_commands:
+  - skillid: pg_begin
+  - skillid: pg_commit
+  - skillid: pg_set_transaction
+
+metadata:
+  source_page: 2009

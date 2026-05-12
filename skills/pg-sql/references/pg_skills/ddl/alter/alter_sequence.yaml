@@ -1,0 +1,36 @@
+skillid: pg_alter_sequence
+name: ALTER SEQUENCE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改序列生成器的参数，包括数据类型、增量、起始值、缓存等"
+
+syntax:
+  primary: "ALTER SEQUENCE [ IF EXISTS ] name\n    [ AS data_type ]\n    [ INCREMENT [ BY ] increment ]\n    [ MINVALUE minvalue | NO MINVALUE ] [ MAXVALUE maxvalue | NO MAXVALUE ]\n    [ START [ WITH ] start ]\n    [ RESTART [ [ WITH ] restart ] ]\n    [ CACHE cache ] [ [ NO ] CYCLE ]\n    [ OWNED BY { table_name.column_name | NONE } ]\nALTER SEQUENCE [ IF EXISTS ] name SET { LOGGED | UNLOGGED }\nALTER SEQUENCE [ IF EXISTS ] name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER SEQUENCE [ IF EXISTS ] name RENAME TO new_name\nALTER SEQUENCE [ IF EXISTS ] name SET SCHEMA new_schema"
+
+key_parameters:
+  - name: name
+    description: "要修改的序列名称（可选模式限定）"
+  - name: IF EXISTS
+    description: "序列不存在时不抛出错误，而是发出提示"
+  - name: data_type
+    description: "序列的数据类型：smallint, integer或bigint"
+  - name: increment
+    description: "增量值，正值为升序，负值为降序"
+  - name: minvalue/maxvalue
+    description: "序列的最小/最大值"
+  - name: start/restart
+    description: "序列的起始值/重启值"
+  - name: cache
+    description: "缓存值，提高性能"
+  - name: CYCLE
+    description: "是否允许循环"
+
+related_commands:
+  - CREATE SEQUENCE
+  - DROP SEQUENCE
+
+metadata:
+  source_page: 1587
+  doc_version: "PostgreSQL 16.4"

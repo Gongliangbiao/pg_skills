@@ -1,0 +1,37 @@
+skillid: pg_alter_view
+name: ALTER VIEW
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改视图的各种辅助属性，包括列默认值、所有者、名称、模式和视图选项"
+
+syntax:
+  primary: "ALTER VIEW [ IF EXISTS ] name ALTER [ COLUMN ] column_name SET DEFAULT expression\nALTER VIEW [ IF EXISTS ] name ALTER [ COLUMN ] column_name DROP DEFAULT\nALTER VIEW [ IF EXISTS ] name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER VIEW [ IF EXISTS ] name RENAME [ COLUMN ] column_name TO new_column_name\nALTER VIEW [ IF EXISTS ] name RENAME TO new_name\nALTER VIEW [ IF EXISTS ] name SET SCHEMA new_schema\nALTER VIEW [ IF EXISTS ] name SET ( view_option_name [= view_option_value] [, ... ] )\nALTER VIEW [ IF EXISTS ] name RESET ( view_option_name [, ... ] )"
+
+key_parameters:
+  - name: name
+    description: "现有视图的名称（可选模式限定）"
+  - name: column_name
+    description: "现有列的名称"
+  - name: new_column_name
+    description: "列的新名称"
+  - name: IF EXISTS
+    description: "视图不存在时不抛出错误，而是发出提示"
+  - name: new_owner
+    description: "视图的新所有者"
+  - name: new_name
+    description: "视图的新名称"
+  - name: new_schema
+    description: "视图的新模式"
+  - name: view_option_name
+    description: "视图选项：check_option, security_barrier, security_invoker"
+
+related_commands:
+  - CREATE VIEW
+  - DROP VIEW
+  - CREATE OR REPLACE VIEW
+
+metadata:
+  source_page: 1633
+  doc_version: "PostgreSQL 16.4"

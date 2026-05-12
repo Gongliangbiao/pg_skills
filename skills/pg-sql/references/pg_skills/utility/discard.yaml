@@ -1,0 +1,26 @@
+skillid: pg_discard
+name: DISCARD
+category: Utility
+
+description:
+  brief: "丢弃会话状态"
+
+syntax:
+  primary: "DISCARD { ALL | PLANS | SEQUENCES | TEMPORARY | TEMP }"
+
+key_parameters:
+  - name: "PLANS"
+    description: "释放所有缓存的查询计划"
+  - name: "SEQUENCES"
+    description: "丢弃所有缓存的序列相关状态"
+  - name: "TEMPORARY or TEMP"
+    description: "删除当前会话中创建的所有临时表"
+  - name: "ALL"
+    description: "释放所有临时资源并重置会话"
+
+related_commands:
+  - "RESET"
+  - "SET"
+
+metadata:
+  source_page: 1842

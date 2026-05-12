@@ -1,0 +1,28 @@
+skillid: pg_set_transaction
+name: SET TRANSACTION
+category: TCL
+
+description:
+  brief: "Set transaction characteristics"
+  detailed: "SET TRANSACTION sets characteristics of the current transaction. Can only be called before any queries."
+
+syntax:
+  primary: |
+    SET TRANSACTION [ transaction_mode [, ...] ]
+    SET TRANSACTION SNAPSHOT snapshot_id
+
+transaction_modes:
+  - "ISOLATION LEVEL { READ COMMITTED | REPEATABLE READ | SERIALIZABLE }"
+  - "READ WRITE | READ ONLY"
+  - "[ NOT ] DEFERRABLE"
+
+notes:
+  - "Must be first command in transaction"
+  - "SNAPSHOT option for importing transaction snapshot"
+
+related_commands:
+  - skillid: pg_begin
+  - skillid: pg_start_transaction
+
+metadata:
+  source_page: 2004

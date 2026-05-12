@@ -1,0 +1,16 @@
+skillid: pg_checkpoint
+name: CHECKPOINT
+category: Utility
+
+description:
+  brief: "强制执行预写日志检查点"
+
+syntax:
+  primary: "CHECKPOINT"
+
+key_parameters: []
+
+related_commands: []
+
+metadata:
+  source_page: 1642

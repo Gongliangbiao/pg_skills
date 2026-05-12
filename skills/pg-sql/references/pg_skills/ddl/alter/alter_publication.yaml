@@ -1,0 +1,36 @@
+skillid: pg_alter_publication
+name: ALTER PUBLICATION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改发布定义，包括添加/删除表/模式、修改发布参数、更改所有者和名称"
+
+syntax:
+  primary: "ALTER PUBLICATION name ADD publication_object [, ...]\nALTER PUBLICATION name SET publication_object [, ...]\nALTER PUBLICATION name DROP publication_object [, ...]\nALTER PUBLICATION name SET ( publication_parameter [= value] [, ... ] )\nALTER PUBLICATION name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER PUBLICATION name RENAME TO new_name\n\nwhere publication_object is one of:\n    TABLE [ ONLY ] table_name [ * ] [ ( column_name [, ... ] ) ] [ WHERE ( expression ) ] [, ...]\n    TABLES IN SCHEMA { schema_name | CURRENT_SCHEMA } [, ...]"
+
+key_parameters:
+  - name: name
+    description: "现有发布的名称"
+  - name: table_name
+    description: "要添加/删除的表名，ONLY仅影响该表，*包含所有后代表"
+  - name: column_name
+    description: "可选的列列表，用于发布特定列"
+  - name: schema_name
+    description: "要添加/删除的模式名"
+  - name: publication_parameter
+    description: "发布参数，如publish, publish_via_partition_root等"
+  - name: new_owner
+    description: "发布的新所有者"
+  - name: new_name
+    description: "发布的新名称"
+
+related_commands:
+  - CREATE PUBLICATION
+  - DROP PUBLICATION
+  - CREATE SUBSCRIPTION
+  - ALTER SUBSCRIPTION
+
+metadata:
+  source_page: 1576
+  doc_version: "PostgreSQL 16.4"

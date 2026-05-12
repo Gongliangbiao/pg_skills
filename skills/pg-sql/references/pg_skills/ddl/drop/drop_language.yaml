@@ -1,0 +1,34 @@
+skillid: pg_drop_language
+name: DROP LANGUAGE
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个过程语言"
+
+syntax:
+  primary: "DROP [ PROCEDURAL ] LANGUAGE [ IF EXISTS ] name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果语言不存在"
+  - name: "name"
+    description: "要删除的过程语言的名称"
+  - name: "PROCEDURAL"
+    description: "可选的关键字，无实际效果"
+  - name: "CASCADE"
+    description: "自动删除依赖该语言的对象（如用该语言编写的函数）"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "必须是超级用户或语言的拥有者才能删除语言"
+  - "从PostgreSQL 9.1开始，大多数过程语言已成为扩展，应使用DROP EXTENSION删除"
+
+related_commands:
+  - skillid: pg_create_language
+  - skillid: pg_alter_language
+
+metadata:
+  source_page: 1862

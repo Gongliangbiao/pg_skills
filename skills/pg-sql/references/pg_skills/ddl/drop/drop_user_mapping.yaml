@@ -1,0 +1,39 @@
+skillid: pg_drop_user_mapping
+name: DROP USER MAPPING
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除外部服务器上的用户映射"
+
+syntax:
+  primary: "DROP USER MAPPING [ IF EXISTS ] FOR { user_name | USER | CURRENT_ROLE | CURRENT_USER | PUBLIC } SERVER server_name"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果用户映射不存在"
+  - name: "user_name"
+    description: "要删除其映射的用户名称"
+  - name: "USER"
+    description: "删除当前用户的映射"
+  - name: "CURRENT_ROLE"
+    pg_specific: true
+    description: "删除当前角色的映射"
+  - name: "CURRENT_USER"
+    description: "删除当前用户的映射"
+  - name: "PUBLIC"
+    description: "删除PUBLIC用户映射"
+  - name: "server_name"
+    description: "用户映射所在的外部服务器名称"
+
+notes:
+  - "外部服务器的拥有者可以为任何用户删除该服务器上的用户映射"
+  - "用户可以删除自己的用户映射（如果有服务器的USAGE权限）"
+
+related_commands:
+  - skillid: pg_create_user_mapping
+  - skillid: pg_alter_user_mapping
+
+metadata:
+  source_page: 1895

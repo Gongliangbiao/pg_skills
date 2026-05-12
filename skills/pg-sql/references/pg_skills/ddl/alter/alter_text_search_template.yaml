@@ -1,0 +1,26 @@
+skillid: pg_alter_text_search_template
+name: ALTER TEXT SEARCH TEMPLATE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改文本搜索模板的定义，目前仅支持更改名称和模式"
+
+syntax:
+  primary: "ALTER TEXT SEARCH TEMPLATE name RENAME TO new_name\nALTER TEXT SEARCH TEMPLATE name SET SCHEMA new_schema"
+
+key_parameters:
+  - name: name
+    description: "现有文本搜索模板的名称（可选模式限定）"
+  - name: new_name
+    description: "模板的新名称"
+  - name: new_schema
+    description: "模板的新模式"
+
+related_commands:
+  - CREATE TEXT SEARCH TEMPLATE
+  - DROP TEXT SEARCH TEMPLATE
+
+metadata:
+  source_page: 1623
+  doc_version: "PostgreSQL 16.4"

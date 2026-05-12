@@ -1,0 +1,36 @@
+skillid: pg_create_publication
+name: CREATE PUBLICATION
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new publication for logical replication"
+
+syntax:
+  primary: "CREATE PUBLICATION name [ FOR ALL TABLES | FOR publication_object [, ...] ] [ WITH ( publication_parameter [= value] [, ...] ) ]"
+
+key_parameters:
+  - name: name
+    description: "The name of the new publication"
+  - name: FOR TABLE
+    description: "Specifies a list of tables to add to the publication"
+  - name: FOR ALL TABLES
+    description: "Marks the publication as replicating changes for all tables in the database"
+  - name: FOR TABLES IN SCHEMA
+    description: "Marks the publication as replicating changes for all tables in specified schemas"
+  - name: WHERE ( expression )
+    description: "Optional row filter expression for tables"
+  - name: column_name
+    description: "Optional column list to replicate only specific columns"
+  - name: publish
+    description: "Determines which DML operations are published: insert, update, delete, truncate"
+  - name: publish_via_partition_root
+    description: "Determines whether changes use the identity of the partitioned table rather than individual partitions"
+
+related_commands:
+  - ALTER PUBLICATION
+  - DROP PUBLICATION
+  - CREATE SUBSCRIPTION
+
+metadata:
+  source_page: 1743

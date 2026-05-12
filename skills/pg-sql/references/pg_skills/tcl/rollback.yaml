@@ -1,0 +1,22 @@
+skillid: pg_rollback
+name: ROLLBACK
+category: TCL
+
+description:
+  brief: "Abort the current transaction"
+  detailed: "ROLLBACK rolls back the current transaction and discards all updates made by the transaction."
+
+syntax:
+  primary: "ROLLBACK [ WORK | TRANSACTION ] [ AND [ NO ] CHAIN ]"
+
+key_parameters:
+  - name: "AND CHAIN"
+    description: "Start new transaction with same characteristics"
+
+related_commands:
+  - skillid: pg_begin
+  - skillid: pg_commit
+  - skillid: pg_abort
+
+metadata:
+  source_page: 1963

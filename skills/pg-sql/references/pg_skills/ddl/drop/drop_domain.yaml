@@ -1,0 +1,31 @@
+skillid: pg_drop_domain
+name: DROP DOMAIN
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个域类型"
+
+syntax:
+  primary: "DROP DOMAIN [ IF EXISTS ] name [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果域不存在"
+  - name: "name"
+    description: "要删除的域的名称（可指定多个）"
+  - name: "CASCADE"
+    description: "自动删除依赖该域的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "只有域的拥有者才能删除域"
+
+related_commands:
+  - skillid: pg_create_domain
+  - skillid: pg_alter_domain
+
+metadata:
+  source_page: 1852

@@ -1,0 +1,86 @@
+skillid: pg_alter_function
+name: ALTER FUNCTION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a function"
+  detailed: |
+    ALTER FUNCTION changes the definition of a function.
+    You must own the function to use ALTER FUNCTION.
+    To change a function's schema, you must also have CREATE privilege on the new schema.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the function's schema.
+
+syntax:
+  primary: |
+    ALTER FUNCTION name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ]
+        action [ ... ] [ RESTRICT ]
+    ALTER FUNCTION name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ]
+        RENAME TO new_name
+    ALTER FUNCTION name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ]
+        OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER FUNCTION name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ]
+        SET SCHEMA new_schema
+    ALTER FUNCTION name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ]
+        [ NO ] DEPENDS ON EXTENSION extension_name
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing function"
+    pg_specific: false
+  - name: "argmode"
+    description: "The mode of an argument: IN, OUT, INOUT, or VARIADIC (default is IN)"
+    pg_specific: true
+  - name: "argname"
+    description: "The name of an argument (not used to determine function identity)"
+    pg_specific: true
+  - name: "argtype"
+    description: "The data type(s) of the function's arguments"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name of the function"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the function"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the function"
+    pg_specific: false
+  - name: "DEPENDS ON EXTENSION"
+    description: "Mark the function as dependent on an extension"
+    pg_specific: true
+  - name: "CALLED ON NULL INPUT"
+    description: "Function will be invoked when some or all of its arguments are null"
+    pg_specific: true
+  - name: "RETURNS NULL ON NULL INPUT / STRICT"
+    description: "Function will not be invoked if any arguments are null; null result is assumed"
+    pg_specific: true
+  - name: "IMMUTABLE / STABLE / VOLATILE"
+    description: "Change the volatility of the function"
+    pg_specific: true
+  - name: "LEAKPROOF"
+    description: "Change whether the function is considered leakproof"
+    pg_specific: true
+  - name: "SECURITY INVOKER / SECURITY DEFINER"
+    description: "Change whether the function is a security definer"
+    pg_specific: true
+  - name: "PARALLEL"
+    description: "Change whether the function is deemed safe for parallelism"
+    pg_specific: true
+  - name: "COST execution_cost"
+    description: "Change the estimated execution cost of the function"
+    pg_specific: true
+  - name: "ROWS result_rows"
+    description: "Change the estimated number of rows returned by a set-returning function"
+    pg_specific: true
+
+related_commands:
+  - skillid: pg_create_function
+  - skillid: pg_drop_function
+  - skillid: pg_alter_procedure
+  - skillid: pg_alter_routine
+
+metadata:
+  source_page: 1551
+  doc_version: "PostgreSQL 16.4"

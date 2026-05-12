@@ -1,0 +1,32 @@
+skillid: pg_drop_transform
+name: DROP TRANSFORM
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个转换"
+
+syntax:
+  primary: "DROP TRANSFORM [ IF EXISTS ] FOR type_name LANGUAGE lang_name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果转换不存在"
+  - name: "type_name"
+    description: "转换的数据类型名称"
+  - name: "lang_name"
+    description: "转换的过程语言名称"
+  - name: "CASCADE"
+    description: "自动删除依赖该转换的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "要删除转换，必须拥有类型和语言"
+
+related_commands:
+  - skillid: pg_create_transform
+
+metadata:
+  source_page: 1891
