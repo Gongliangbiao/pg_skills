@@ -1,0 +1,84 @@
+skillid: pg_alter_materialized_view
+name: ALTER MATERIALIZED VIEW
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a materialized view"
+  detailed: |
+    ALTER MATERIALIZED VIEW changes various auxiliary properties of an existing materialized view.
+    You must own the materialized view to use ALTER MATERIALIZED VIEW.
+    To change a materialized view's schema, you must also have CREATE privilege on the new schema.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the materialized view's schema.
+    The statement subforms and actions available are a subset of those available for ALTER TABLE.
+
+syntax:
+  primary: |
+    ALTER MATERIALIZED VIEW [ IF EXISTS ] name
+        action [, ... ]
+    ALTER MATERIALIZED VIEW name
+        [ NO ] DEPENDS ON EXTENSION extension_name
+    ALTER MATERIALIZED VIEW [ IF EXISTS ] name
+        RENAME [ COLUMN ] column_name TO new_column_name
+    ALTER MATERIALIZED VIEW [ IF EXISTS ] name
+        RENAME TO new_name
+    ALTER MATERIALIZED VIEW [ IF EXISTS ] name
+        SET SCHEMA new_schema
+    ALTER MATERIALIZED VIEW ALL IN TABLESPACE name [ OWNED BY role_name [, ... ] ]
+        SET TABLESPACE new_tablespace [ NOWAIT ]
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing materialized view"
+    pg_specific: true
+  - name: "IF EXISTS"
+    description: "Do not throw error if materialized view does not exist"
+    pg_specific: true
+  - name: "column_name"
+    description: "Name of an existing column"
+    pg_specific: false
+  - name: "extension_name"
+    description: "The name of the extension that the materialized view is to depend on"
+    pg_specific: true
+  - name: "new_column_name"
+    description: "New name for an existing column"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The user name of the new owner of the materialized view"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name for the materialized view"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the materialized view"
+    pg_specific: false
+  - name: "SET TABLESPACE"
+    description: "Change the tablespace of the materialized view"
+    pg_specific: true
+  - name: "SET ACCESS METHOD"
+    description: "Change the access method of the materialized view"
+    pg_specific: true
+
+actions:
+  - name: "ALTER COLUMN SET STATISTICS"
+    effect: "Set per-column statistics target"
+  - name: "ALTER COLUMN SET STORAGE"
+    effect: "Set storage mode for a column"
+  - name: "CLUSTER ON"
+    effect: "Set clustering index"
+  - name: "SET WITHOUT CLUSTER"
+    effect: "Remove clustering setting"
+  - name: "OWNER TO"
+    effect: "Change owner"
+  - name: "SET SCHEMA"
+    effect: "Move to different schema"
+
+related_commands:
+  - skillid: pg_create_materialized_view
+  - skillid: pg_drop_materialized_view
+  - skillid: pg_refresh_materialized_view
+
+metadata:
+  source_page: 1562
+  doc_version: "PostgreSQL 16.4"

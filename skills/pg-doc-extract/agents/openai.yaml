@@ -1,0 +1,4 @@
+interface:
+  display_name: "PG Doc Extract"
+  short_description: "从 PostgreSQL 官方文档抽取因子和测试点"
+  default_prompt: "Use $pg-doc-extract to extract PostgreSQL official documentation into test factor matrices and test point overview files."

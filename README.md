@@ -2,7 +2,7 @@
 
 [中文 README](README.zh-CN.md)
 
-`pg_skills` is a set of Codex skills for designing and generating PostgreSQL regression SQL test cases from official documentation, local knowledge, and reviewable test coverage artifacts.
+`pg_skills` is a set of AI agent skills for designing and generating PostgreSQL regression SQL test cases from official documentation, local knowledge, and reviewable test coverage artifacts. The skills are written in the standard skill directory format and can be installed into tools that support local skills, such as Codex and Claude Code.
 
 The current workflow separates coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
 
@@ -109,11 +109,18 @@ Each skill directory contains a `SKILL.md` file and may include `agents/`, `refe
 
 ## Installation
 
-Clone this repository and copy the skills you need into your Codex skills directory:
+Clone this repository first:
 
 ```bash
 git clone https://github.com/Gongliangbiao/pg_skills.git
 cd pg_skills
+```
+
+### Codex
+
+Copy the skills into your Codex skills directory:
+
+```bash
 mkdir -p ~/.codex/skills
 cp -R skills/pg-doc-extract ~/.codex/skills/
 cp -R skills/pg-case-design ~/.codex/skills/
@@ -123,6 +130,23 @@ cp -R skills/pg-sql ~/.codex/skills/
 ```
 
 Restart Codex after installation so the new or updated skills are loaded.
+
+### Claude Code
+
+Copy the same skill directories into your Claude Code skills directory:
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R skills/pg-doc-extract ~/.claude/skills/
+cp -R skills/pg-case-design ~/.claude/skills/
+cp -R skills/pg-casegen ~/.claude/skills/
+cp -R skills/pg-sql-case-naming ~/.claude/skills/
+cp -R skills/pg-sql ~/.claude/skills/
+```
+
+Restart Claude Code after installation so the new or updated skills are loaded.
+
+If your agent tool uses a different local skills directory, copy the directories under `skills/` into that tool's configured skills path.
 
 ## Usage Examples
 

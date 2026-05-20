@@ -1,0 +1,37 @@
+skillid: pg_create_operator_class
+name: CREATE OPERATOR CLASS
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的操作符类，指定特定数据类型如何与索引方法配合使用"
+
+syntax:
+  primary: "CREATE OPERATOR CLASS name [ DEFAULT ] FOR TYPE data_type USING index_method [ FAMILY family_name ] AS { OPERATOR strategy_number operator_name [ ( op_type, op_type ) ] [ FOR SEARCH | FOR ORDER BY sort_family_name ] | FUNCTION support_number [ ( op_type [ , op_type ] ) ] function_name ( argument_type [, ...] ) | STORAGE storage_type } [, ... ]"
+
+key_parameters:
+  - name: name
+    desc: "操作符类名称，可带模式限定"
+  - name: DEFAULT
+    desc: "将此操作符类设为该数据类型的默认操作符类"
+  - name: data_type
+    desc: "操作符类适用的列数据类型"
+  - name: index_method
+    desc: "索引方法名称: btree、hash、gist、spgist、gin、brin等"
+  - name: FAMILY family_name
+    desc: "要添加此操作符类的现有操作符族"
+  - name: OPERATOR
+    desc: "关联操作符及其策略编号"
+  - name: FUNCTION
+    desc: "索引方法支持函数及其编号"
+  - name: STORAGE
+    desc: "实际存储在索引中的数据类型"
+
+related_commands:
+  - skillid: pg_alter_operator_class
+  - skillid: pg_drop_operator_class
+  - skillid: pg_create_operator_family
+  - skillid: pg_create_operator
+
+metadata:
+  source_page: 1729

@@ -1,0 +1,25 @@
+skillid: pg_create_text_search_configuration
+name: CREATE TEXT SEARCH CONFIGURATION
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new text search configuration"
+
+syntax:
+  primary: "CREATE TEXT SEARCH CONFIGURATION name ( PARSER = parser_name | COPY = source_config )"
+
+key_parameters:
+  - name: name
+    description: "The name of the text search configuration to be created. Can be schema-qualified"
+  - name: PARSER = parser_name
+    description: "The name of the text search parser to use for this configuration"
+  - name: COPY = source_config
+    description: "The name of an existing text search configuration to copy"
+
+related_commands:
+  - ALTER TEXT SEARCH CONFIGURATION
+  - DROP TEXT SEARCH CONFIGURATION
+
+metadata:
+  source_page: 1801

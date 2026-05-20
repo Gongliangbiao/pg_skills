@@ -1,0 +1,48 @@
+skillid: pg_create_sequence
+name: CREATE SEQUENCE
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new sequence generator"
+  detailed: "CREATE SEQUENCE creates a new sequence number generator. Typically used for auto-generated primary key values."
+
+syntax:
+  primary: |
+    CREATE [ TEMPORARY | TEMP ] SEQUENCE [ IF NOT EXISTS ] name
+    [ INCREMENT [ BY ] increment ]
+    [ MINVALUE minvalue | NO MINVALUE ]
+    [ MAXVALUE maxvalue | NO MAXVALUE ]
+    [ START [ WITH ] start ]
+    [ CACHE cache ]
+    [ [ NO ] CYCLE ]
+    [ OWNED BY { table_name.column_name | NONE } ]
+
+key_parameters:
+  - name: "INCREMENT"
+    description: "Step value (default 1)"
+  - name: "START"
+    description: "Starting value"
+  - name: "MINVALUE/MAXVALUE"
+    description: "Range bounds"
+  - name: "CYCLE"
+    description: "Restart when exhausted"
+  - name: "CACHE"
+    pg_specific: true
+    description: "Pre-allocate cache size for performance"
+  - name: "OWNED BY"
+    pg_specific: true
+    description: "Associate with specific column"
+
+examples:
+  basic:
+    - code: "CREATE SEQUENCE user_id_seq START 1000;"
+    - code: "CREATE SEQUENCE order_seq OWNED BY orders.id;"
+
+related_commands:
+  - skillid: pg_alter_sequence
+  - skillid: pg_drop_sequence
+  - skillid: pg_nextval
+
+metadata:
+  source_page: 1758

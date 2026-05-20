@@ -1,0 +1,88 @@
+skillid: pg_table_locks
+name: Table-Level Locks
+category: Concurrency
+
+description:
+  brief: "PostgreSQL表级锁模式详解"
+  detailed: |
+    PostgreSQL提供多种表级锁模式控制对表的并发访问。
+    锁可以通过LOCK命令显式获取，或由SQL命令自动获取。
+    锁在事务结束前一直持有（除非在savepoint回滚后释放）。
+
+lock_modes:
+  - mode: "ACCESS SHARE"
+    lock_name: "AccessShareLock"
+    conflicts_with: ["ACCESS EXCLUSIVE"]
+    acquired_by: "SELECT命令"
+    description: "最轻量级锁，只读取表"
+
+  - mode: "ROW SHARE"
+    lock_name: "RowShareLock"
+    conflicts_with: ["EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "SELECT FOR UPDATE/SHARE"
+    description: "表明意图获取行级锁"
+
+  - mode: "ROW EXCLUSIVE"
+    lock_name: "RowExclusiveLock"
+    conflicts_with: ["SHARE", "SHARE ROW EXCLUSIVE", "EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "UPDATE, DELETE, INSERT, MERGE"
+    description: "数据修改命令获取此锁"
+
+  - mode: "SHARE UPDATE EXCLUSIVE"
+    lock_name: "ShareUpdateExclusiveLock"
+    conflicts_with: ["SHARE UPDATE EXCLUSIVE", "SHARE", "SHARE ROW EXCLUSIVE", "EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "VACUUM, ANALYZE, CREATE INDEX CONCURRENTLY, REINDEX CONCURRENTLY"
+    description: "防止并发schema变更和VACUUM"
+
+  - mode: "SHARE"
+    lock_name: "ShareLock"
+    conflicts_with: ["ROW EXCLUSIVE", "SHARE UPDATE EXCLUSIVE", "SHARE ROW EXCLUSIVE", "EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "CREATE INDEX (without CONCURRENTLY)"
+    description: "防止并发数据修改"
+
+  - mode: "SHARE ROW EXCLUSIVE"
+    lock_name: "ShareRowExclusiveLock"
+    conflicts_with: ["ROW EXCLUSIVE", "SHARE UPDATE EXCLUSIVE", "SHARE", "SHARE ROW EXCLUSIVE", "EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "CREATE TRIGGER, ALTER TABLE某些形式"
+    description: "自排他，只有一个会话可持有"
+
+  - mode: "EXCLUSIVE"
+    lock_name: "ExclusiveLock"
+    conflicts_with: ["ROW SHARE", "ROW EXCLUSIVE", "SHARE UPDATE EXCLUSIVE", "SHARE", "SHARE ROW EXCLUSIVE", "EXCLUSIVE", "ACCESS EXCLUSIVE"]
+    acquired_by: "REFRESH MATERIALIZED VIEW CONCURRENTLY"
+    description: "只允许并发ACCESS SHARE（读）"
+
+  - mode: "ACCESS EXCLUSIVE"
+    lock_name: "AccessExclusiveLock"
+    conflicts_with: ["所有锁模式"]
+    acquired_by: "DROP TABLE, TRUNCATE, VACUUM FULL, ALTER TABLE大多数形式, LOCK TABLE默认"
+    description: "最严格锁，阻止所有其他访问"
+
+conflict_matrix:
+  requested_lock: "请求的锁"
+  existing_lock: "已持有的锁"
+  x_means_conflict: "X表示冲突"
+  note: "只有ACCESS EXCLUSIVE阻塞SELECT（无FOR UPDATE/SHARE）"
+
+explicit_locking:
+  command: "LOCK TABLE table_name [ IN lockmode MODE ] [ NOWAIT ]"
+  nowait: "如果无法立即获取锁则报错而非等待"
+
+notes:
+  - "锁名称中的'ROW'是历史原因，实际都是表级锁"
+  - "事务不与自身冲突，可以获取多种锁"
+  - "savepoint回滚会释放之后获取的锁"
+
+monitoring:
+  view: "pg_locks系统视图显示当前持有的锁"
+  example: "SELECT * FROM pg_locks WHERE relation = 'table_name'::regclass;"
+
+related_topics:
+  - skillid: pg_row_locks
+  - skillid: pg_lock_command
+  - skillid: pg_deadlock
+
+metadata:
+  source_page: 492-494
+  doc_version: "PostgreSQL 16.4"
+  chapter: "13.3.1 Table-Level Locks"

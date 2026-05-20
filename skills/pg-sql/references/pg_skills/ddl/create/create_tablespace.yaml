@@ -1,0 +1,30 @@
+skillid: pg_create_tablespace
+name: CREATE TABLESPACE
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new tablespace for storing database objects"
+
+syntax:
+  primary: "CREATE TABLESPACE tablespace_name [ OWNER { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER } ] LOCATION 'directory' [ WITH ( tablespace_option = value [, ...] ) ]"
+
+key_parameters:
+  - name: tablespace_name
+    description: "The name of a tablespace to be created. Cannot begin with pg_"
+  - name: OWNER
+    description: "The name of the user who will own the tablespace. Default is the user executing the command"
+  - name: LOCATION 'directory'
+    description: "The directory that will be used for the tablespace. Must be an absolute path, exist, be empty, and be owned by PostgreSQL system user"
+  - name: tablespace_option
+    description: "A tablespace parameter: seq_page_cost, random_page_cost, effective_io_concurrency, or maintenance_io_concurrency"
+
+related_commands:
+  - ALTER TABLESPACE
+  - DROP TABLESPACE
+  - CREATE DATABASE
+  - CREATE TABLE
+  - CREATE INDEX
+
+metadata:
+  source_page: 1799

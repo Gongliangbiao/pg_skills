@@ -1,0 +1,23 @@
+skillid: pg_reassign_owned
+name: REASSIGN OWNED
+category: Utility
+
+description:
+  brief: "更改数据库角色拥有的数据库对象的所属关系"
+
+syntax:
+  primary: "REASSIGN OWNED BY { old_role | CURRENT_ROLE | CURRENT_USER | SESSION_USER } [, ...]\n               TO { new_role | CURRENT_ROLE | CURRENT_USER | SESSION_USER }"
+
+key_parameters:
+  - name: "old_role"
+    description: "旧角色的名称"
+  - name: "new_role"
+    description: "将成为新所有者的角色的名称"
+
+related_commands:
+  - "DROP OWNED"
+  - "DROP ROLE"
+  - "ALTER DATABASE"
+
+metadata:
+  source_page: 1947

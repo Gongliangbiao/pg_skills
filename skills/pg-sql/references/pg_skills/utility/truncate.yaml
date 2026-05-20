@@ -1,0 +1,35 @@
+skillid: pg_truncate
+name: TRUNCATE
+category: Utility
+
+description:
+  brief: "Empty a table or set of tables"
+  detailed: "TRUNCATE quickly removes all rows from a table, faster than DELETE. It resets sequences and can cascade to dependent tables."
+
+syntax:
+  primary: |
+    TRUNCATE [ TABLE ] [ ONLY ] name [, ... ] [ RESTART IDENTITY | CONTINUE IDENTITY ]
+    [ CASCADE | RESTRICT ]
+
+key_parameters:
+  - name: "RESTART IDENTITY"
+    pg_specific: true
+    description: "Restart associated sequences"
+  - name: "CASCADE"
+    description: "Also truncate tables with foreign key references"
+
+notes:
+  - "Much faster than DELETE for emptying tables"
+  - "Cannot be rolled back in same transaction"
+
+examples:
+  basic:
+    - code: "TRUNCATE logs;"
+    - code: "TRUNCATE users RESTART IDENTITY CASCADE;"
+
+related_commands:
+  - skillid: pg_delete
+  - skillid: pg_vacuum
+
+metadata:
+  source_page: 2010

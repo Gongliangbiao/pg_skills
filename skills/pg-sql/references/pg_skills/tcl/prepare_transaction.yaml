@@ -1,0 +1,20 @@
+skillid: pg_prepare_transaction
+name: PREPARE TRANSACTION
+category: TCL
+
+description:
+  brief: "为两阶段提交准备当前事务"
+
+syntax:
+  primary: "PREPARE TRANSACTION transaction_id"
+
+key_parameters:
+  - name: "transaction_id"
+    description: "事务标识符，用于后续的COMMIT PREPARED或ROLLBACK PREPARED"
+
+related_commands:
+  - "COMMIT PREPARED"
+  - "ROLLBACK PREPARED"
+
+metadata:
+  source_page: 1945

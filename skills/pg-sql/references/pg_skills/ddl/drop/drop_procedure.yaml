@@ -1,0 +1,41 @@
+skillid: pg_drop_procedure
+name: DROP PROCEDURE
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个或多个存储过程"
+
+syntax:
+  primary: "DROP PROCEDURE [ IF EXISTS ] name [ ( [ [ argmode ] [ argname ] argtype [, ...] ] ) ] [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果存储过程不存在"
+  - name: "name"
+    description: "要删除的存储过程的名称（可指定多个）"
+  - name: "argmode"
+    description: "参数模式：IN、OUT、INOUT或VARIADIC，默认为IN"
+  - name: "argname"
+    description: "参数名称（DROP PROCEDURE不关注参数名称）"
+  - name: "argtype"
+    description: "存储过程参数的数据类型"
+  - name: "CASCADE"
+    description: "自动删除依赖该存储过程的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "必须拥有存储过程才能删除它"
+  - "如果有多个同名存储过程，需要指定参数列表"
+  - "只需列出输入参数（包括INOUT）即可唯一标识存储过程"
+
+related_commands:
+  - skillid: pg_create_procedure
+  - skillid: pg_alter_procedure
+  - skillid: pg_drop_function
+  - skillid: pg_drop_routine
+
+metadata:
+  source_page: 1872

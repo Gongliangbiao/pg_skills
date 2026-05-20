@@ -1,0 +1,29 @@
+skillid: pg_alter_index
+name: ALTER INDEX
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an index"
+  detailed: "ALTER INDEX changes the definition of an existing index. Supports SET TABLESPACE, SET, RESET options."
+
+syntax:
+  primary: |
+    ALTER INDEX name SET TABLESPACE new_tablespace
+    ALTER INDEX name SET ( storage_parameter = value [, ... ])
+    ALTER INDEX name RESET ( storage_parameter [, ... ])
+    ALTER INDEX name ATTACH PARTITION index_name
+
+key_parameters:
+  - name: "SET TABLESPACE"
+    pg_specific: true
+    description: "Move index to different tablespace"
+  - name: "SET/RESET"
+    description: "Modify storage parameters"
+
+related_commands:
+  - skillid: pg_create_index
+  - skillid: pg_drop_index
+
+metadata:
+  source_page: 1557

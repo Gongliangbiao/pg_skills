@@ -1,0 +1,32 @@
+skillid: pg_alter_database
+name: ALTER DATABASE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change a database"
+  detailed: "ALTER DATABASE changes attributes of a database."
+
+syntax:
+  primary: |
+    ALTER DATABASE name [ [ WITH ] option [ ... ] ]
+    ALTER DATABASE name RENAME TO new_name
+    ALTER DATABASE name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER DATABASE name SET TABLESPACE new_tablespace
+    ALTER DATABASE name SET configuration_parameter { TO | = } { value | DEFAULT }
+    ALTER DATABASE name RESET configuration_parameter
+
+key_parameters:
+  - name: "ALLOW_CONNECTIONS"
+    pg_specific: true
+    description: "Allow/disallow connections"
+  - name: "CONNECTION LIMIT"
+    pg_specific: true
+    description: "Maximum concurrent connections"
+
+related_commands:
+  - skillid: pg_create_database
+  - skillid: pg_drop_database
+
+metadata:
+  source_page: 1528

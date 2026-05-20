@@ -1,0 +1,25 @@
+skillid: pg_set_role
+name: SET ROLE
+category: TCL
+
+description:
+  brief: "设置当前会话的当前用户标识符"
+
+syntax:
+  primary: "SET [ SESSION | LOCAL ] ROLE role_name\nSET [ SESSION | LOCAL ] ROLE NONE\nRESET ROLE"
+
+key_parameters:
+  - name: "SESSION"
+    description: "设置在整个会话期间有效"
+  - name: "LOCAL"
+    description: "设置仅在当前事务期间有效"
+  - name: "role_name"
+    description: "要设置的角色的名称"
+  - name: "NONE"
+    description: "将当前用户标识符设置为当前会话用户标识符"
+
+related_commands:
+  - "SET SESSION AUTHORIZATION"
+
+metadata:
+  source_page: 2000

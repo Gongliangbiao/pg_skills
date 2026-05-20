@@ -2,7 +2,7 @@
 
 [English README](README.md)
 
-`pg_skills` 是一组用于 PostgreSQL 回归 SQL 测试用例设计和生成的 Codex skills。它面向从官方文档、本地知识库和可审阅覆盖产物出发，逐步形成测试因子、测试点、用例设计，最终生成 SQL 用例文件的工作流。
+`pg_skills` 是一组用于 PostgreSQL 回归 SQL 测试用例设计和生成的 AI agent skills。它面向从官方文档、本地知识库和可审阅覆盖产物出发，逐步形成测试因子、测试点、用例设计，最终生成 SQL 用例文件的工作流。这些 skills 采用标准 skill 目录格式，可安装到支持本地 skills 的工具中，例如 Codex 和 Claude Code。
 
 当前流程把覆盖抽取、用例设计、SQL 生成、SQL 命名和 PostgreSQL 语法查询拆成多个单一职责的 skill，方便逐步审查，也方便后续维护和扩展。
 
@@ -110,11 +110,18 @@ pg_skills/
 
 ## 安装
 
-克隆仓库，并将需要的 skills 复制到 Codex skills 目录：
+先克隆仓库：
 
 ```bash
 git clone https://github.com/Gongliangbiao/pg_skills.git
 cd pg_skills
+```
+
+### Codex
+
+将需要的 skills 复制到 Codex skills 目录：
+
+```bash
 mkdir -p ~/.codex/skills
 cp -R skills/pg-doc-extract ~/.codex/skills/
 cp -R skills/pg-case-design ~/.codex/skills/
@@ -124,6 +131,23 @@ cp -R skills/pg-sql ~/.codex/skills/
 ```
 
 安装完成后重启 Codex，使新增或更新的 skills 生效。
+
+### Claude Code
+
+将同一组 skill 目录复制到 Claude Code skills 目录：
+
+```bash
+mkdir -p ~/.claude/skills
+cp -R skills/pg-doc-extract ~/.claude/skills/
+cp -R skills/pg-case-design ~/.claude/skills/
+cp -R skills/pg-casegen ~/.claude/skills/
+cp -R skills/pg-sql-case-naming ~/.claude/skills/
+cp -R skills/pg-sql ~/.claude/skills/
+```
+
+安装完成后重启 Claude Code，使新增或更新的 skills 生效。
+
+如果你的 agent 工具使用不同的本地 skills 目录，可以将 `skills/` 下的目录复制到该工具配置的 skills 路径中。
 
 ## 使用示例
 
@@ -160,4 +184,3 @@ cp -R skills/pg-sql ~/.codex/skills/
 - 发布文件中不包含本机绝对路径
 - README 示例使用仓库相对路径
 - 不包含 `.DS_Store` 或临时文件
-

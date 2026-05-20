@@ -1,0 +1,33 @@
+skillid: pg_create_domain
+name: CREATE DOMAIN
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的域(Domain)，即带有可选约束的数据类型，用于抽象常见字段约束"
+
+syntax:
+  primary: "CREATE DOMAIN name [ AS ] data_type [ COLLATE collation ] [ DEFAULT expression ] [ constraint [ ... ] ]"
+
+  constraint_clause: "constraint: [ CONSTRAINT constraint_name ] { NOT NULL | NULL | CHECK (expression) }"
+
+key_parameters:
+  - name: name
+    desc: "域名称，可带模式限定"
+  - name: data_type
+    desc: "域的底层数据类型，可包含数组说明符"
+  - name: collation
+    desc: "可选的域排序规则"
+  - name: DEFAULT expression
+    desc: "域类型列的默认值"
+  - name: NOT NULL
+    desc: "防止域值为空"
+  - name: CHECK (expression)
+    desc: "完整性约束，使用VALUE关键字引用被测试的值"
+
+related_commands:
+  - skillid: pg_alter_domain
+  - skillid: pg_drop_domain
+
+metadata:
+  source_page: 1687

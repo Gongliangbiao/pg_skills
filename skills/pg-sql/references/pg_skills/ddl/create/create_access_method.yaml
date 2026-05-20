@@ -1,0 +1,26 @@
+skillid: pg_create_access_method
+name: CREATE ACCESS METHOD
+category: DDL
+subcategory: create
+
+description:
+  brief: "创建新的访问方法(Access Method)，用于定义表或索引的访问方式"
+
+syntax:
+  primary: "CREATE ACCESS METHOD name TYPE access_method_type HANDLER handler_function"
+
+key_parameters:
+  - name: name
+    desc: "访问方法的名称，必须在数据库中唯一"
+  - name: access_method_type
+    desc: "访问方法类型，目前支持TABLE和INDEX"
+  - name: handler_function
+    desc: "处理函数名称，用于实现访问方法的具体功能。TABLE类型需返回table_am_handler，INDEX类型需返回index_am_handler"
+
+related_commands:
+  - skillid: pg_drop_access_method
+  - skillid: pg_create_operator_class
+  - skillid: pg_create_operator_family
+
+metadata:
+  source_page: 1664

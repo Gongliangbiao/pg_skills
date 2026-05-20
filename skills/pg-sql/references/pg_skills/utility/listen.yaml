@@ -1,0 +1,20 @@
+skillid: pg_listen
+name: LISTEN
+category: Utility
+
+description:
+  brief: "监听一个通知"
+
+syntax:
+  primary: "LISTEN channel"
+
+key_parameters:
+  - name: "channel"
+    description: "通知通道的名称"
+
+related_commands:
+  - "NOTIFY"
+  - "UNLISTEN"
+
+metadata:
+  source_page: 1925

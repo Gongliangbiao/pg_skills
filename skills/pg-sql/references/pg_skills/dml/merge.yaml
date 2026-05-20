@@ -1,0 +1,29 @@
+skillid: pg_merge
+name: MERGE
+category: DML
+
+description:
+  brief: "条件性地插入、更新或删除表中的行"
+
+syntax:
+  primary: "[ WITH with_query [, ...] ]\nMERGE INTO [ ONLY ] target_table_name [ * ] [ [ AS ] target_alias ]\nUSING data_source ON join_condition\nwhen_clause [...]\n\nwhere data_source is:\n{ [ ONLY ] source_table_name [ * ] | ( source_query ) }\n [ [ AS ] source_alias ]\n\nand when_clause is:\n{ WHEN MATCHED [ AND condition ] THEN { merge_update | merge_delete | DO NOTHING } |\n  WHEN NOT MATCHED [ AND condition ] THEN { merge_insert | DO NOTHING } }\n\nand merge_insert is:\nINSERT [( column_name [, ...] )]\n[ OVERRIDING { SYSTEM | USER } VALUE ]\n{ VALUES ( { expression | DEFAULT } [, ...] ) | DEFAULT VALUES }\n\nand merge_update is:\nUPDATE SET { column_name = { expression | DEFAULT } |\n             ( column_name [, ...] ) = [ ROW ] ( { expression | DEFAULT } [, ...] ) |\n             ( column_name [, ...] ) = ( sub-SELECT ) }\n           [, ...]\n\nand merge_delete is:\nDELETE"
+
+key_parameters:
+  - name: "with_query"
+    description: "WITH子句中的辅助语句"
+  - name: "target_table_name"
+    description: "目标表的名称"
+  - name: "data_source"
+    description: "数据源，可以是表名或子查询"
+  - name: "join_condition"
+    description: "连接条件"
+  - name: "when_clause"
+    description: "WHEN匹配子句，指定匹配或不匹配时的操作"
+
+related_commands:
+  - "INSERT"
+  - "UPDATE"
+  - "DELETE"
+
+metadata:
+  source_page: 1931

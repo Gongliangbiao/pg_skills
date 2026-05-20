@@ -1,0 +1,31 @@
+skillid: pg_drop_text_search_dictionary
+name: DROP TEXT SEARCH DICTIONARY
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个文本搜索字典"
+
+syntax:
+  primary: "DROP TEXT SEARCH DICTIONARY [ IF EXISTS ] name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果字典不存在"
+  - name: "name"
+    description: "要删除的文本搜索字典的名称"
+  - name: "CASCADE"
+    description: "自动删除依赖该字典的文本搜索配置"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "必须拥有该字典才能删除它"
+
+related_commands:
+  - skillid: pg_create_text_search_dictionary
+  - skillid: pg_alter_text_search_dictionary
+
+metadata:
+  source_page: 1888

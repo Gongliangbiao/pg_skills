@@ -1,0 +1,56 @@
+skillid: pg_alter_aggregate
+name: ALTER AGGREGATE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an aggregate function"
+  detailed: |
+    ALTER AGGREGATE changes the definition of an aggregate function.
+    You must own the aggregate function to use ALTER AGGREGATE.
+    To change the schema of an aggregate function, you must also have CREATE privilege on the new schema.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the aggregate function's schema.
+
+syntax:
+  primary: |
+    ALTER AGGREGATE name ( aggregate_signature ) RENAME TO new_name
+    ALTER AGGREGATE name ( aggregate_signature )
+        OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER AGGREGATE name ( aggregate_signature ) SET SCHEMA new_schema
+
+    where aggregate_signature is:
+    * |
+    [ argmode ] [ argname ] argtype [ , ... ] |
+    [ [ argmode ] [ argname ] argtype [ , ... ] ] ORDER BY [ argmode ] [ argname ] argtype [ , ... ]
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing aggregate function"
+    pg_specific: false
+  - name: "argmode"
+    description: "The mode of an argument: IN or VARIADIC. If omitted, the default is IN"
+    pg_specific: true
+  - name: "argname"
+    description: "The name of an argument. Note that argument names are not used to determine identity"
+    pg_specific: true
+  - name: "argtype"
+    description: "An input data type on which the aggregate function operates. Use * for zero-argument aggregate"
+    pg_specific: true
+  - name: "new_name"
+    description: "The new name of the aggregate function"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the aggregate function"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the aggregate function"
+    pg_specific: false
+
+related_commands:
+  - skillid: pg_create_aggregate
+  - skillid: pg_drop_aggregate
+
+metadata:
+  source_page: 1521
+  doc_version: "PostgreSQL 16.4"

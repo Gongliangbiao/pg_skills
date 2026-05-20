@@ -1,0 +1,34 @@
+skillid: pg_drop_operator
+name: DROP OPERATOR
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个运算符"
+
+syntax:
+  primary: "DROP OPERATOR [ IF EXISTS ] name ( { left_type | NONE } , right_type ) [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果运算符不存在"
+  - name: "name"
+    description: "要删除的运算符的名称（可指定多个）"
+  - name: "left_type"
+    description: "运算符左侧参数的数据类型，如果为NONE表示左一元运算符"
+  - name: "right_type"
+    description: "运算符右侧参数的数据类型"
+  - name: "CASCADE"
+    description: "自动删除依赖该运算符的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "必须拥有运算符才能删除它"
+
+related_commands:
+  - skillid: pg_create_operator
+
+metadata:
+  source_page: 1864

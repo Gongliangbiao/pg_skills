@@ -1,0 +1,25 @@
+skillid: pg_refresh_materialized_view
+name: REFRESH MATERIALIZED VIEW
+category: Utility
+
+description:
+  brief: "替换物化视图的内容"
+
+syntax:
+  primary: "REFRESH MATERIALIZED VIEW [ CONCURRENTLY ] name\n    [ WITH [ NO ] DATA ]"
+
+key_parameters:
+  - name: "CONCURRENTLY"
+    description: "不锁定对物化视图的并发选择"
+  - name: "name"
+    description: "要刷新的物化视图的名称"
+  - name: "WITH DATA"
+    description: "执行后备查询以提供新数据"
+  - name: "WITH NO DATA"
+    description: "不生成新数据，物化视图处于不可扫描状态"
+
+related_commands:
+  - "CREATE MATERIALIZED VIEW"
+
+metadata:
+  source_page: 1948

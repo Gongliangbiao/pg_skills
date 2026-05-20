@@ -1,0 +1,25 @@
+skillid: pg_create_text_search_template
+name: CREATE TEXT SEARCH TEMPLATE
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new text search template"
+
+syntax:
+  primary: "CREATE TEXT SEARCH TEMPLATE name ( [ INIT = init_function, ] LEXIZE = lexize_function )"
+
+key_parameters:
+  - name: name
+    description: "The name of the text search template to be created. Can be schema-qualified"
+  - name: INIT = init_function
+    description: "The name of the init function for the template. Optional"
+  - name: LEXIZE = lexize_function
+    description: "The name of the lexize function for the template. Required"
+
+related_commands:
+  - ALTER TEXT SEARCH TEMPLATE
+  - DROP TEXT SEARCH TEMPLATE
+
+metadata:
+  source_page: 1806

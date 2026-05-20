@@ -1,0 +1,127 @@
+skillid: pg_insert
+name: INSERT
+category: DML
+
+description:
+  brief: "Create new rows in a table"
+  detailed: |
+    INSERT inserts new rows into a table. One can insert one or more rows
+    specified by value expressions, or zero or more rows resulting from a query.
+
+    The target column names can be listed in any order. If no list of column
+    names is given at all, the default is all the columns of the table in
+    their declared order; or if VALUES clause supplies values for only some
+    columns, the remaining columns will filled with their default values.
+
+syntax:
+  primary: |
+    INSERT INTO table_name [ AS alias ] [ ( column_name [, ...] ) ]
+    [ OVERRIDING { SYSTEM | USER } VALUE ]
+    { DEFAULT VALUES | VALUES ( { expression | DEFAULT } [, ...] ) [, ...] | query }
+    [ ON CONFLICT [ conflict_target ] conflict_action ]
+    [ RETURNING { * | output_expression [ [ AS ] output_name ] } [, ...] ]
+  variants:
+    - name: "Basic insert"
+      syntax: "INSERT INTO table_name (columns) VALUES (values);"
+    - name: "Insert from query"
+      syntax: "INSERT INTO table_name query;"
+    - name: "Upsert (ON CONFLICT)"
+      syntax: "INSERT INTO table_name VALUES (...) ON CONFLICT DO UPDATE SET ...;"
+
+key_parameters:
+  - name: "table_name"
+    type: "identifier"
+    required: true
+    description: "The name (optionally schema-qualified) of the target table"
+  - name: "column_name"
+    type: "identifier"
+    required: false
+    description: "Names of columns to insert values into. If omitted, all columns."
+  - name: "VALUES"
+    type: "clause"
+    required: conditional
+    description: "Explicit value expressions for each column"
+  - name: "DEFAULT VALUES"
+    type: "keyword"
+    required: false
+    description: "Insert row with all columns set to their default values"
+  - name: "query"
+    type: "query"
+    required: conditional
+    description: "A SELECT query providing rows to insert"
+  - name: "ON CONFLICT"
+    type: "clause"
+    required: false
+    pg_specific: true
+    description: "Specifies action when unique/exclusion constraint violation occurs"
+  - name: "RETURNING"
+    type: "clause"
+    required: false
+    pg_specific: true
+    description: "Returns inserted rows' computed values"
+
+on_conflict_options:
+  - name: "DO NOTHING"
+    effect: "Skip the insert, no action taken"
+  - name: "DO UPDATE SET ..."
+    effect: "Update existing row instead"
+    sub_options:
+      - "WHERE condition - Only update if condition matches"
+
+notes:
+  prerequisites:
+    - "Must have INSERT privilege on the table"
+    - "Must have SELECT privilege on any query used"
+  restrictions:
+    - "Identity columns may require OVERRIDING clause"
+  best_practices:
+    - "Use RETURNING to get inserted IDs"
+    - "Use ON CONFLICT for upsert operations"
+  warnings:
+    - "ON CONFLICT requires unique or exclusion constraint"
+
+examples:
+  basic:
+    - title: "Insert single row"
+      code: |
+        INSERT INTO users (username, email) VALUES ('john', 'john@example.com');
+      explanation: "Insert a new user with specified values"
+    - title: "Insert with RETURNING"
+      code: |
+        INSERT INTO users (username) VALUES ('alice')
+        RETURNING id, username;
+      explanation: "Insert and return generated values"
+  advanced:
+    - title: "Upsert (insert or update)"
+      code: |
+        INSERT INTO users (username, email) VALUES ('john', 'new@example.com')
+        ON CONFLICT (username) DO UPDATE SET email = EXCLUDED.email;
+      explanation: "Update email if username already exists"
+    - title: "Insert from query"
+      code: |
+        INSERT INTO logs (user_id, action)
+        SELECT id, 'login' FROM users WHERE active = true;
+      explanation: "Insert rows derived from another table"
+
+related_commands:
+  - skillid: pg_update
+    relationship: "Update existing rows"
+  - skillid: pg_select
+    relationship: "Query data"
+  - skillid: pg_delete
+    relationship: "Delete rows"
+  - skillid: pg_copy
+    relationship: "Bulk data import"
+
+compatibility:
+  sql_standard: true
+  notes: |
+    SQL standard supports basic INSERT.
+    PostgreSQL extensions: ON CONFLICT (Upsert), RETURNING,
+    OVERRIDING for identity columns.
+
+metadata:
+  source_page: 1917
+  doc_version: "PostgreSQL 16.4"
+  priority: high
+  frequency: frequent

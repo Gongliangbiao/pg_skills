@@ -1,0 +1,43 @@
+skillid: pg_copy
+name: COPY
+category: Utility
+
+description:
+  brief: "Copy data between a file and a table"
+  detailed: "COPY moves data between PostgreSQL tables and standard file-system files. Super efficient for bulk data transfer."
+
+syntax:
+  primary: |
+    COPY table_name [ ( column_name [, ...] ) ]
+    FROM { 'filename' | PROGRAM 'command' | STDIN }
+    [ [ WITH ] ( option [, ...] ) ]
+
+    COPY { table_name [ ( column_name [, ...] ) ] | ( query ) }
+    TO { 'filename' | PROGRAM 'command' | STDOUT }
+    [ [ WITH ] ( option [, ...] ) ]
+
+key_parameters:
+  - name: "FROM/TO"
+    description: "Direction of data transfer"
+  - name: "FORMAT"
+    pg_specific: true
+    description: "Format: TEXT, CSV, BINARY"
+  - name: "DELIMITER"
+    description: "Field separator"
+  - name: "HEADER"
+    description: "Include header row (CSV)"
+
+notes:
+  - "Much faster than INSERT for bulk loading"
+  - "Requires superuser for file paths"
+
+examples:
+  basic:
+    - code: "COPY users TO '/tmp/users.csv' WITH CSV HEADER;"
+    - code: "COPY users FROM '/tmp/users.csv' WITH CSV HEADER;"
+
+related_commands:
+  - skillid: pg_insert
+
+metadata:
+  source_page: 1654

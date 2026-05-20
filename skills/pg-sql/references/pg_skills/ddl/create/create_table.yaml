@@ -1,0 +1,189 @@
+name: CREATE TABLE
+description: 定义一个新表
+version: "16.4"
+category: DDL
+subcategory: create
+pg_specific: false
+
+syntax:
+  primary: |
+    CREATE [ [ GLOBAL | LOCAL ] { TEMPORARY | TEMP } | UNLOGGED ] TABLE
+    [ IF NOT EXISTS ] table_name (
+      { column_name data_type [ STORAGE ... ] [ COMPRESSION ... ]
+        [ COLLATE collation ] [ column_constraint [ ... ] ]
+      | table_constraint
+      | LIKE source_table [ like_option ... ] }
+      [, ... ]
+    )
+    [ INHERITS ( parent_table [, ... ] ) ]
+    [ PARTITION BY { RANGE | LIST | HASH } ( ... ) ]
+    [ USING method ]
+    [ WITH ( storage_parameter [= value] [, ... ] ) | WITHOUT OIDS ]
+    [ ON COMMIT { PRESERVE ROWS | DELETE ROWS | DROP } ]
+    [ TABLESPACE tablespace_name ]
+  variants:
+    - name: "分区表"
+      syntax: "CREATE TABLE table_name PARTITION OF parent_table FOR VALUES partition_bound_spec;"
+      description: "创建分区表的分区"
+    - name: "类型表"
+      syntax: "CREATE TABLE table_name OF type_name;"
+      description: "基于复合类型创建表"
+    - name: "临时表"
+      syntax: "CREATE TEMP TABLE table_name (...);"
+      description: "创建会话结束自动删除的临时表"
+
+parameters:
+  - name: TEMPORARY/TEMP
+    type: keyword
+    required: false
+    pg_specific: false
+    description: "创建临时表，会话结束时自动删除"
+  - name: UNLOGGED
+    type: keyword
+    required: false
+    pg_specific: true
+    description: "创建无日志表，不写WAL，更快但不安全"
+  - name: IF NOT EXISTS
+    type: keyword
+    required: false
+    pg_specific: true
+    description: "同名表已存在时不报错，只发出提示"
+  - name: table_name
+    type: identifier
+    required: true
+    description: "表名（可选schema限定）"
+  - name: column_name
+    type: identifier
+    required: true
+    description: "列名"
+  - name: data_type
+    type: type_name
+    required: true
+    description: "列数据类型，可包含数组指定符"
+  - name: PARTITION BY
+    type: clause
+    required: false
+    pg_specific: true
+    description: "指定分区策略：RANGE/LIST/HASH"
+
+options:
+  - group: "列约束"
+    items:
+      - name: NOT NULL
+        effect: "列不允许NULL值"
+      - name: DEFAULT expression
+        effect: "设置列默认值"
+      - name: UNIQUE
+        effect: "列值唯一约束"
+      - name: PRIMARY KEY
+        effect: "主键约束"
+      - name: REFERENCES table
+        effect: "外键引用约束"
+      - name: GENERATED ALWAYS AS (expr) STORED
+        effect: "生成列（自动计算）"
+        pg_specific: true
+      - name: GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY
+        effect: "标识列（自增）"
+        pg_specific: true
+  - group: "表约束"
+    items:
+      - name: CHECK (expression)
+        effect: "检查约束"
+      - name: UNIQUE (columns)
+        effect: "多列唯一约束"
+      - name: PRIMARY KEY (columns)
+        effect: "复合主键"
+      - name: FOREIGN KEY (columns) REFERENCES ...
+        effect: "外键约束"
+      - name: EXCLUDE USING ...
+        effect: "排除约束"
+        pg_specific: true
+
+examples:
+  basic:
+    - title: "简单表"
+      code: |
+        CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          username TEXT NOT NULL UNIQUE,
+          email TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      explanation: "创建用户表，包含自增主键和约束"
+    - title: "带默认值"
+      code: |
+        CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          name TEXT NOT NULL,
+          price NUMERIC DEFAULT 0,
+          active BOOLEAN DEFAULT true
+        );
+      explanation: "创建产品表，列带默认值"
+  advanced:
+    - title: "分区表"
+      code: |
+        CREATE TABLE orders (
+          order_id BIGINT,
+          order_date DATE NOT NULL,
+          customer_id INTEGER
+        ) PARTITION BY RANGE (order_date);
+
+        CREATE TABLE orders_2024 PARTITION OF orders
+          FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');
+      explanation: "按日期范围创建分区表"
+    - title: "生成列"
+      code: |
+        CREATE TABLE invoices (
+          id SERIAL PRIMARY KEY,
+          price NUMERIC,
+          tax_rate NUMERIC DEFAULT 0.1,
+          total NUMERIC GENERATED ALWAYS AS
+            (price * (1 + tax_rate)) STORED
+        );
+      explanation: "total列自动计算生成"
+
+notes:
+  prerequisites:
+    - "必须有CREATE权限"
+    - "必须对列类型有USAGE权限"
+  restrictions:
+    - "临时表不能指定schema名称"
+    - "表名必须与同schema中现有关系不同"
+  best_practices:
+    - "使用IF NOT EXISTS避免意外覆盖"
+    - "大表考虑分区策略"
+    - "合理使用索引而非过度添加约束"
+  warnings:
+    - "INHERITS创建持久继承关系"
+    - "UNLOGGED表崩溃后自动清空"
+
+errors:
+  - code: "relation already exists"
+    cause: "同名表已存在"
+    solution: "使用IF NOT EXISTS或先检查"
+  - code: "permission denied"
+    cause: "无CREATE权限"
+    solution: "GRANT CREATE ON schema TO role"
+  - code: "type does not exist"
+    cause: "使用了不存在的数据类型"
+    solution: "检查类型名和schema限定"
+
+related:
+  - name: ALTER TABLE
+    relationship: "修改表结构"
+  - name: DROP TABLE
+    relationship: "删除表"
+  - name: CREATE INDEX
+    relationship: "创建索引"
+  - name: CREATE TABLE AS
+    relationship: "从查询创建表"
+
+compatibility:
+  sql_standard: true
+  notes: "SQL标准支持基本CREATE TABLE。PG扩展：UNLOGGED、IF NOT EXISTS、PARTITION BY、GENERATED STORED、EXCLUDE约束、INHERITS"
+
+metadata:
+  source_page: 1773
+  doc_version: "PostgreSQL 16.4"
+  priority: high
+  frequency: frequent

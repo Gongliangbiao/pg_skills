@@ -1,0 +1,83 @@
+skillid: pg_alter_operator_family
+name: ALTER OPERATOR FAMILY
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of an operator family"
+  detailed: |
+    ALTER OPERATOR FAMILY changes the definition of an operator family.
+    You can add operators and support functions to the family, remove them from the family,
+    or change the family's name or owner.
+    Operators and functions added with ALTER OPERATOR FAMILY are "loose" within the family,
+    not part of any specific operator class.
+    You must be a superuser to use ALTER OPERATOR FAMILY.
+
+syntax:
+  primary: |
+    ALTER OPERATOR FAMILY name USING index_method ADD
+      { OPERATOR strategy_number operator_name ( op_type, op_type )
+              [ FOR SEARCH | FOR ORDER BY sort_family_name ]
+       | FUNCTION support_number [ ( op_type [ , op_type ] ) ]
+              function_name [ ( argument_type [, ...] ) ]
+      } [, ... ]
+    ALTER OPERATOR FAMILY name USING index_method DROP
+      { OPERATOR strategy_number ( op_type [ , op_type ] )
+       | FUNCTION support_number ( op_type [ , op_type ] )
+      } [, ... ]
+    ALTER OPERATOR FAMILY name USING index_method
+        RENAME TO new_name
+    ALTER OPERATOR FAMILY name USING index_method
+        OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER OPERATOR FAMILY name USING index_method
+        SET SCHEMA new_schema
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing operator family"
+    pg_specific: true
+  - name: "index_method"
+    description: "The name of the index method this operator family is for"
+    pg_specific: true
+  - name: "strategy_number"
+    description: "The index method's strategy number for an operator"
+    pg_specific: true
+  - name: "operator_name"
+    description: "The name (optionally schema-qualified) of an operator"
+    pg_specific: true
+  - name: "op_type"
+    description: "The operand data type(s) of the operator, or NONE for prefix operator"
+    pg_specific: true
+  - name: "sort_family_name"
+    description: "The name of an existing btree operator family for ordering"
+    pg_specific: true
+  - name: "support_number"
+    description: "The index method's support function number"
+    pg_specific: true
+  - name: "function_name"
+    description: "The name of a function that is an index method support function"
+    pg_specific: true
+  - name: "new_name"
+    description: "The new name of the operator family"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the operator family"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the operator family"
+    pg_specific: false
+
+notes:
+  - "You must be a superuser to use ALTER OPERATOR FAMILY"
+  - "DROP syntax only specifies the slot by strategy/support number and data type(s)"
+  - "Cross-data-type operators and functions are typically loose members"
+
+related_commands:
+  - skillid: pg_create_operator_family
+  - skillid: pg_drop_operator_family
+  - skillid: pg_create_operator_class
+  - skillid: pg_alter_operator_class
+
+metadata:
+  source_page: 1567
+  doc_version: "PostgreSQL 16.4"

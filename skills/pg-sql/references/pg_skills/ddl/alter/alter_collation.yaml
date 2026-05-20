@@ -1,0 +1,45 @@
+skillid: pg_alter_collation
+name: ALTER COLLATION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a collation"
+  detailed: |
+    ALTER COLLATION changes the definition of a collation.
+    You must own the collation to use ALTER COLLATION.
+    To alter the owner, you must be able to SET ROLE to the new owning role,
+    and that role must have CREATE privilege on the collation's schema.
+    REFRESH VERSION updates the collation's version in the system catalog.
+
+syntax:
+  primary: |
+    ALTER COLLATION name REFRESH VERSION
+    ALTER COLLATION name RENAME TO new_name
+    ALTER COLLATION name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER COLLATION name SET SCHEMA new_schema
+
+key_parameters:
+  - name: "name"
+    description: "The name (optionally schema-qualified) of an existing collation"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name of the collation"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the collation"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the collation"
+    pg_specific: false
+  - name: "REFRESH VERSION"
+    description: "Update the collation's version in system catalog after OS/ICU library upgrade"
+    pg_specific: true
+
+related_commands:
+  - skillid: pg_create_collation
+  - skillid: pg_drop_collation
+
+metadata:
+  source_page: 1523
+  doc_version: "PostgreSQL 16.4"

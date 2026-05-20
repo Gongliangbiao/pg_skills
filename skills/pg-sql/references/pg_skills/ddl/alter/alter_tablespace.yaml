@@ -1,0 +1,28 @@
+skillid: pg_alter_tablespace
+name: ALTER TABLESPACE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改表空间的定义，包括名称、所有者和参数"
+
+syntax:
+  primary: "ALTER TABLESPACE name RENAME TO new_name\nALTER TABLESPACE name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER TABLESPACE name SET ( tablespace_option = value [, ... ] )\nALTER TABLESPACE name RESET ( tablespace_option [, ... ] )"
+
+key_parameters:
+  - name: name
+    description: "现有表空间的名称"
+  - name: new_name
+    description: "表空间的新名称，不能以pg_开头"
+  - name: new_owner
+    description: "表空间的新所有者"
+  - name: tablespace_option
+    description: "表空间参数：seq_page_cost, random_page_cost, effective_io_concurrency, maintenance_io_concurrency"
+
+related_commands:
+  - CREATE TABLESPACE
+  - DROP TABLESPACE
+
+metadata:
+  source_page: 1616
+  doc_version: "PostgreSQL 16.4"

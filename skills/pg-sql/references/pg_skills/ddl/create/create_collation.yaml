@@ -1,0 +1,37 @@
+skillid: pg_create_collation
+name: CREATE COLLATION
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的排序规则(Collation)，用于指定字符串排序和比较行为"
+
+syntax:
+  primary: "CREATE COLLATION [ IF NOT EXISTS ] name ( [ LOCALE = locale, ] [ LC_COLLATE = lc_collate, ] [ LC_CTYPE = lc_ctype, ] [ PROVIDER = provider, ] [ DETERMINISTIC = boolean, ] [ RULES = rules, ] [ VERSION = version ] )"
+
+  alternative: "CREATE COLLATION [ IF NOT EXISTS ] name FROM existing_collation"
+
+key_parameters:
+  - name: name
+    desc: "排序规则名称，可带模式限定"
+  - name: LOCALE
+    desc: "locale名称，设置LC_COLLATE和LC_CTYPE的快捷方式"
+  - name: LC_COLLATE
+    desc: "libc提供者使用的LC_COLLATE locale类别"
+  - name: LC_CTYPE
+    desc: "libc提供者使用的LC_CTYPE locale类别"
+  - name: PROVIDER
+    desc: "locale服务提供者，可选icu或libc"
+  - name: DETERMINISTIC
+    desc: "是否使用确定性比较，默认true"
+  - name: RULES
+    desc: "ICU专用，自定义排序规则的额外规则"
+  - name: existing_collation
+    desc: "要复制的现有排序规则名称"
+
+related_commands:
+  - skillid: pg_alter_collation
+  - skillid: pg_drop_collation
+
+metadata:
+  source_page: 1677

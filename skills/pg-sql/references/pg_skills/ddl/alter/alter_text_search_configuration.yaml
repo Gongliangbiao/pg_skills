@@ -1,0 +1,32 @@
+skillid: pg_alter_text_search_configuration
+name: ALTER TEXT SEARCH CONFIGURATION
+category: DDL
+subcategory: alter
+
+description:
+  brief: "修改文本搜索配置的定义，包括词元类型到字典的映射、名称、所有者和模式"
+
+syntax:
+  primary: "ALTER TEXT SEARCH CONFIGURATION name\n    ADD MAPPING FOR token_type [, ... ] WITH dictionary_name [, ... ]\nALTER TEXT SEARCH CONFIGURATION name\n    ALTER MAPPING FOR token_type [, ... ] WITH dictionary_name [, ... ]\nALTER TEXT SEARCH CONFIGURATION name\n    ALTER MAPPING REPLACE old_dictionary WITH new_dictionary\nALTER TEXT SEARCH CONFIGURATION name\n    ALTER MAPPING FOR token_type [, ... ] REPLACE old_dictionary WITH new_dictionary\nALTER TEXT SEARCH CONFIGURATION name\n    DROP MAPPING [ IF EXISTS ] FOR token_type [, ... ]\nALTER TEXT SEARCH CONFIGURATION name RENAME TO new_name\nALTER TEXT SEARCH CONFIGURATION name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }\nALTER TEXT SEARCH CONFIGURATION name SET SCHEMA new_schema"
+
+key_parameters:
+  - name: name
+    description: "现有文本搜索配置的名称（可选模式限定）"
+  - name: token_type
+    description: "配置解析器发出的词元类型名称"
+  - name: dictionary_name
+    description: "为指定词元类型查询的文本搜索字典名称"
+  - name: old_dictionary
+    description: "要替换的字典名称"
+  - name: new_dictionary
+    description: "替换后的字典名称"
+  - name: new_name
+    description: "配置的新名称"
+
+related_commands:
+  - CREATE TEXT SEARCH CONFIGURATION
+  - DROP TEXT SEARCH CONFIGURATION
+
+metadata:
+  source_page: 1618
+  doc_version: "PostgreSQL 16.4"

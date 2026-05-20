@@ -1,0 +1,34 @@
+skillid: pg_drop_trigger
+name: DROP TRIGGER
+category: DDL
+subcategory: drop
+
+description:
+  brief: "删除一个触发器"
+
+syntax:
+  primary: "DROP TRIGGER [ IF EXISTS ] name ON table_name [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果触发器不存在"
+  - name: "name"
+    description: "要删除的触发器的名称"
+  - name: "table_name"
+    description: "触发器所在表的名称"
+  - name: "CASCADE"
+    description: "自动删除依赖该触发器的对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "要执行此命令，必须是触发器所在表的拥有者"
+  - "PostgreSQL中触发器名称是表本地化的，需指定表名"
+
+related_commands:
+  - skillid: pg_create_trigger
+  - skillid: pg_alter_trigger
+
+metadata:
+  source_page: 1892

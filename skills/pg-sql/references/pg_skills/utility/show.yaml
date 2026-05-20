@@ -1,0 +1,22 @@
+skillid: pg_show
+name: SHOW
+category: Utility
+
+description:
+  brief: "显示运行时参数的值"
+
+syntax:
+  primary: "SHOW name\nSHOW ALL"
+
+key_parameters:
+  - name: "name"
+    description: "运行时参数的名称"
+  - name: "ALL"
+    description: "显示所有配置参数的值"
+
+related_commands:
+  - "RESET"
+  - "SET"
+
+metadata:
+  source_page: 2007

@@ -1,0 +1,104 @@
+skillid: pg_concurrency_best_practices
+name: Concurrency Control Best Practices
+category: Concurrency
+
+description:
+  brief: "PostgreSQL并发控制最佳实践"
+  detailed: |
+    正确使用并发控制机制可显著提高应用性能和数据一致性。
+    以下是从PostgreSQL文档中提取的最佳实践建议。
+
+transaction_design:
+  - practice: "尽可能声明READ ONLY事务"
+    benefit: "减少锁定开销，提高Serializable性能"
+
+  - practice: "控制活跃连接数量"
+    benefit: "使用连接池，Serializable事务时尤为重要"
+
+  - practice: "不将过多操作放入单个事务"
+    benefit: "只需确保完整性时包含必要操作"
+
+  - practice: "不要长时间保持idle in transaction"
+    benefit: "设置idle_in_transaction_session_timeout自动断开"
+    config: "idle_in_transaction_session_timeout = '10min'"
+
+locking_order:
+  - practice: "以一致顺序获取多个对象的锁"
+    benefit: "避免死锁"
+    example: "更新行时始终按id升序"
+
+  - practice: "首先获取最严格的锁模式"
+    benefit: "避免后续升级锁导致的死锁"
+
+serializable_optimization:
+  - practice: "消除不必要的显式锁、SELECT FOR UPDATE/SHARE"
+    benefit: "Serializable自动提供保护"
+
+  - practice: "增加max_pred_locks_per_transaction"
+    benefit: "避免谓词锁合并导致的序列化失败增加"
+
+  - practice: "降低random_page_cost，增加cpu_tuple_cost"
+    benefit: "鼓励使用索引扫描而非顺序扫描"
+
+deadlock_handling:
+  - practice: "准备重试因死锁失败的事务"
+    error_code: "40P01"
+
+  - practice: "不要在事务中等待用户输入"
+    benefit: "避免长时间持有锁"
+
+retry_pattern:
+  recommended: "重试整个事务，而非部分"
+  sqlstate_check: "检查40001和40P01"
+  max_attempts: "设置合理上限"
+  exponential_backoff: "可选，在高争用时有效"
+
+explicit_locking_when_needed:
+  - scenario: "业务规则验证需要"
+    solution: "使用SELECT FOR UPDATE或LOCK TABLE"
+
+  - scenario: "全局一致性检查"
+    solution: "锁定所有相关表获取SHARE或更高锁"
+
+  - scenario: "悲观锁定策略"
+    solution: "使用Advisory Locks"
+
+caveats:
+  - issue: "TRUNCATE和ALTER TABLE重写形式非MVCC安全"
+    effect: "DDL提交后，表对并发事务可能显示为空"
+    affected_transactions: "DDL开始前未访问该表的事务"
+
+  - issue: "Hot Standby不支持Serializable"
+    effect: "最高隔离级别是Repeatable Read"
+
+  - issue: "系统目录访问不使用事务隔离级别"
+    effect: "新建对象对新事务可见，但其内容行可能不可见"
+
+configuration_parameters:
+  - name: "max_pred_locks_per_transaction"
+    default: "64"
+    purpose: "Serializable谓词锁数量"
+
+  - name: "max_pred_locks_per_relation"
+    purpose: "每个关系的谓词锁数量"
+
+  - name: "max_pred_locks_per_page"
+    purpose: "每页的谓词锁数量"
+
+  - name: "idle_in_transaction_session_timeout"
+    purpose: "自动断开长时间idle会话"
+
+monitoring:
+  - view: "pg_locks - 当前锁状态"
+  - view: "pg_stat_activity - 会话状态"
+  - query_example: "SELECT * FROM pg_locks WHERE granted = false;"
+
+related_topics:
+  - skillid: pg_mvcc
+  - skillid: pg_transaction_isolation
+  - skillid: pg_deadlock
+
+metadata:
+  source_page: 486-501
+  doc_version: "PostgreSQL 16.4"
+  chapter: "Chapter 13 Concurrency Control"

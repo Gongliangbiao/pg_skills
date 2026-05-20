@@ -1,0 +1,116 @@
+skillid: pg_update
+name: UPDATE
+category: DML
+
+description:
+  brief: "Update existing rows in a table"
+  detailed: |
+    UPDATE changes the values of specified columns in existing rows of a table.
+    Only columns that are mentioned in the SET clause are affected; others
+    retain their previous values.
+
+    You can update rows based on conditions in the WHERE clause. If WHERE
+    is omitted, all rows in the table are updated.
+
+syntax:
+  primary: |
+    [ WITH [ RECURSIVE ] with_query [, ...] ]
+    UPDATE [ ONLY ] table_name [ * ] [ [ AS ] alias ]
+    SET { column_name = { expression | DEFAULT } |
+          ( column_name [, ...] ) = [ ROW ] ( { expression | DEFAULT } [, ...] ) |
+          ( column_name [, ...] ) = ( sub-SELECT statement )
+        } [, ...]
+    [ FROM from_item [, ...] ]
+    [ WHERE condition | WHERE CURRENT OF cursor_name ]
+    [ RETURNING { * | output_expression [ [ AS ] output_name ] } [, ...] ]
+
+key_parameters:
+  - name: "table_name"
+    type: "identifier"
+    required: true
+    description: "The name (optionally schema-qualified) of the table to update"
+  - name: "SET"
+    type: "clause"
+    required: true
+    description: "Specifies columns and their new values"
+  - name: "column_name"
+    type: "identifier"
+    required: true
+    description: "Name of column to update"
+  - name: "expression"
+    type: "expression"
+    required: true
+    description: "New value expression for the column"
+  - name: "FROM"
+    type: "clause"
+    required: false
+    description: "Allows referencing other tables in WHERE or expressions"
+  - name: "WHERE condition"
+    type: "clause"
+    required: false
+    description: "Only update rows satisfying this condition"
+  - name: "RETURNING"
+    type: "clause"
+    required: false
+    pg_specific: true
+    description: "Returns updated rows' computed values"
+
+notes:
+  prerequisites:
+    - "Must have UPDATE privilege on the table"
+    - "Must have SELECT privilege on columns referenced in WHERE or FROM"
+  restrictions:
+    - "Cannot update columns used in CHECK or NOT NULL constraints with invalid values"
+  best_practices:
+    - "Always include WHERE clause unless updating all rows"
+    - "Use RETURNING to verify changes"
+  warnings:
+    - "UPDATE without WHERE affects ALL rows"
+
+examples:
+  basic:
+    - title: "Simple update"
+      code: |
+        UPDATE users SET email = 'new@example.com' WHERE id = 5;
+      explanation: "Update email for specific user"
+    - title: "Update multiple columns"
+      code: |
+        UPDATE products SET price = price * 1.1, status = 'active'
+        WHERE category = 'electronics';
+      explanation: "Increase price and set status for electronics category"
+  advanced:
+    - title: "Update with FROM clause"
+      code: |
+        UPDATE orders SET status = 'shipped'
+        FROM shipments
+        WHERE orders.id = shipments.order_id
+        AND shipments.delivered = true;
+      explanation: "Update orders based on shipment status"
+    - title: "Update with RETURNING"
+      code: |
+        UPDATE accounts SET balance = balance - 100
+        WHERE id = 1
+        RETURNING balance;
+      explanation: "Update and return new balance"
+
+related_commands:
+  - skillid: pg_insert
+    relationship: "Insert new rows"
+  - skillid: pg_delete
+    relationship: "Delete rows"
+  - skillid: pg_select
+    relationship: "Query data"
+  - skillid: pg_merge
+    relationship: "Conditional insert/update/delete"
+
+compatibility:
+  sql_standard: true
+  notes: |
+    SQL standard supports basic UPDATE.
+    PostgreSQL extensions: FROM clause, RETURNING, WHERE CURRENT OF cursor.
+
+metadata:
+  source_page: 2014
+  doc_version: "PostgreSQL 16.4"
+  priority: high
+  frequency: frequent

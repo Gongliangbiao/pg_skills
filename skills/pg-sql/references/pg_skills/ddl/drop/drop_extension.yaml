@@ -1,0 +1,32 @@
+skillid: pg_drop_extension
+name: DROP EXTENSION
+category: DDL
+subcategory: drop
+
+description:
+  brief: "从数据库中删除扩展"
+
+syntax:
+  primary: "DROP EXTENSION [ IF EXISTS ] name [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "不报错如果扩展不存在"
+  - name: "name"
+    description: "要删除的扩展的名称（可指定多个）"
+  - name: "CASCADE"
+    description: "自动删除依赖该扩展的对象，包括扩展成员对象"
+  - name: "RESTRICT"
+    description: "如果有依赖对象则拒绝删除，这是默认行为"
+
+notes:
+  - "删除扩展会同时删除其成员对象"
+  - "必须拥有扩展才能删除它"
+
+related_commands:
+  - skillid: pg_create_extension
+  - skillid: pg_alter_extension
+
+metadata:
+  source_page: 1854

@@ -1,0 +1,32 @@
+skillid: pg_create_language
+name: CREATE LANGUAGE
+category: DDL
+subcategory: create
+
+description:
+  brief: "注册新的过程语言，随后可在该语言中定义函数和过程"
+
+syntax:
+  primary: "CREATE [ OR REPLACE ] [ TRUSTED ] [ PROCEDURAL ] LANGUAGE name HANDLER call_handler [ INLINE inline_handler ] [ VALIDATOR valfunction ]"
+
+key_parameters:
+  - name: OR REPLACE
+    desc: "创建新语言或替换现有定义"
+  - name: TRUSTED
+    desc: "标记为可信语言，不会授予用户额外权限"
+  - name: name
+    desc: "新过程语言名称，必须在数据库中唯一"
+  - name: HANDLER call_handler
+    desc: "调用处理函数，用于执行过程语言的函数，返回language_handler类型"
+  - name: INLINE inline_handler
+    desc: "内联处理函数，用于执行匿名代码块(DO命令)"
+  - name: VALIDATOR valfunction
+    desc: "验证函数，用于验证新函数定义"
+
+related_commands:
+  - skillid: pg_alter_language
+  - skillid: pg_drop_language
+  - skillid: pg_create_function
+
+metadata:
+  source_page: 1721

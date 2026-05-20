@@ -1,0 +1,25 @@
+skillid: pg_drop_view
+name: DROP VIEW
+category: DDL
+subcategory: drop
+
+description:
+  brief: "Remove a view"
+  detailed: "DROP VIEW removes an existing view."
+
+syntax:
+  primary: "DROP VIEW [ IF EXISTS ] name [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "Do not error if view doesn't exist"
+  - name: "CASCADE"
+    description: "Automatically drop dependent objects"
+
+related_commands:
+  - skillid: pg_create_view
+  - skillid: pg_alter_view
+
+metadata:
+  source_page: 1896

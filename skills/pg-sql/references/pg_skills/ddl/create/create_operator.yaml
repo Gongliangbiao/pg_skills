@@ -1,0 +1,40 @@
+skillid: pg_create_operator
+name: CREATE OPERATOR
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的操作符，用于自定义数据类型的运算操作"
+
+syntax:
+  primary: "CREATE OPERATOR name ( {FUNCTION|PROCEDURE} = function_name [, LEFTARG = left_type ] [, RIGHTARG = right_type ] [, COMMUTATOR = com_op ] [, NEGATOR = neg_op ] [, RESTRICT = res_proc ] [, JOIN = join_proc ] [, HASHES ] [, MERGES ] )"
+
+key_parameters:
+  - name: name
+    desc: "操作符名称，最多63字符，可用字符: +-*/<>=~!@#%^&|`?"
+  - name: function_name
+    desc: "实现此操作符的函数"
+  - name: LEFTARG
+    desc: "左操作数类型，前缀操作符可省略"
+  - name: RIGHTARG
+    desc: "右操作数类型"
+  - name: COMMUTATOR
+    desc: "交换操作符，查询优化器提示"
+  - name: NEGATOR
+    desc: "否定操作符"
+  - name: RESTRICT
+    desc: "限制选择性估计函数"
+  - name: JOIN
+    desc: "连接选择性估计函数"
+  - name: HASHES
+    desc: "表示此操作符支持哈希连接"
+  - name: MERGES
+    desc: "表示此操作符支持合并连接"
+
+related_commands:
+  - skillid: pg_alter_operator
+  - skillid: pg_drop_operator
+  - skillid: pg_create_operator_class
+
+metadata:
+  source_page: 1726

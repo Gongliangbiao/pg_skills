@@ -1,0 +1,34 @@
+skillid: pg_drop_index
+name: DROP INDEX
+category: DDL
+subcategory: drop
+
+description:
+  brief: "Remove an index"
+  detailed: "DROP INDEX removes an existing index from the database system."
+
+syntax:
+  primary: "DROP INDEX [ CONCURRENTLY ] [ IF EXISTS ] name [, ...] [ CASCADE | RESTRICT ]"
+
+key_parameters:
+  - name: "CONCURRENTLY"
+    pg_specific: true
+    description: "Drop without locking table"
+  - name: "IF EXISTS"
+    pg_specific: true
+    description: "Do not error if index doesn't exist"
+  - name: "CASCADE"
+    description: "Automatically drop dependent objects"
+
+examples:
+  basic:
+    - code: "DROP INDEX idx_users_email;"
+    - code: "DROP INDEX CONCURRENTLY idx_logs_date;"
+
+related_commands:
+  - skillid: pg_create_index
+  - skillid: pg_alter_index
+  - skillid: pg_reindex
+
+metadata:
+  source_page: 1860

@@ -1,0 +1,36 @@
+skillid: pg_create_foreign_table
+name: CREATE FOREIGN TABLE
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的外部表，用于访问外部数据源中的数据"
+
+syntax:
+  primary: "CREATE FOREIGN TABLE [ IF NOT EXISTS ] table_name ( [ { column_name data_type [ OPTIONS ( option 'value' [, ... ] ) ] [ COLLATE collation ] [ column_constraint [ ... ] ] | table_constraint } [, ... ] ] ) [ INHERITS ( parent_table [, ... ] ) ] SERVER server_name [ OPTIONS ( option 'value' [, ... ] ) ]"
+
+  partition_clause: "CREATE FOREIGN TABLE [ IF NOT EXISTS ] table_name PARTITION OF parent_table [ ( { column_name [ WITH OPTIONS ] [ column_constraint [ ... ] ] | table_constraint } [, ... ] ) ] { FOR VALUES partition_bound_spec | DEFAULT } SERVER server_name [ OPTIONS ( option 'value' [, ... ] ) ]"
+
+key_parameters:
+  - name: table_name
+    desc: "外部表名称，可带模式限定"
+  - name: column_name
+    desc: "列名称"
+  - name: data_type
+    desc: "列数据类型"
+  - name: SERVER server_name
+    desc: "要使用的外部服务器名称"
+  - name: OPTIONS
+    desc: "外部表或列的选项，由具体FDW决定"
+  - name: INHERITS
+    desc: "指定父表列表，自动继承所有列"
+  - name: PARTITION OF
+    desc: "创建为分区表的分区"
+
+related_commands:
+  - skillid: pg_alter_foreign_table
+  - skillid: pg_drop_foreign_table
+  - skillid: pg_create_server
+
+metadata:
+  source_page: 1697

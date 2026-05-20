@@ -1,0 +1,35 @@
+skillid: pg_create_aggregate
+name: CREATE AGGREGATE
+category: DDL
+subcategory: create
+
+description:
+  brief: "定义新的聚合函数，用于自定义数据聚合计算逻辑"
+
+syntax:
+  primary: "CREATE [ OR REPLACE ] AGGREGATE name ( [ argmode ] [ argname ] arg_data_type [ , ... ] ) ( SFUNC = sfunc, STYPE = state_data_type [ , SSPACE = state_data_size ] [ , FINALFUNC = ffunc ] [ , FINALFUNC_EXTRA ] [ , COMBINEFUNC = combinefunc ] [ , SERIALFUNC = serialfunc ] [ , DESERIALFUNC = deserialfunc ] [ , INITCOND = initial_condition ] [ , MSFUNC = msfunc ] [ , MINVFUNC = minvfunc ] [ , MSTYPE = mstate_data_type ] [ , SORTOP = sort_operator ] [ , PARALLEL = { SAFE | RESTRICTED | UNSAFE } ] )"
+
+key_parameters:
+  - name: name
+    desc: "聚合函数名称，可带模式限定"
+  - name: arg_data_type
+    desc: "输入数据类型，可支持多参数或零参数(使用*)"
+  - name: SFUNC
+    desc: "状态转换函数，处理每个输入行"
+  - name: STYPE
+    desc: "状态值的数据类型"
+  - name: FINALFUNC
+    desc: "可选的最终计算函数，计算聚合结果"
+  - name: INITCOND
+    desc: "初始状态值"
+  - name: COMBINEFUNC
+    desc: "合并函数，用于支持部分聚合"
+  - name: PARALLEL
+    desc: "并行安全级别: SAFE、RESTRICTED或UNSAFE"
+
+related_commands:
+  - skillid: pg_alter_aggregate
+  - skillid: pg_drop_aggregate
+
+metadata:
+  source_page: 1665

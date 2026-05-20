@@ -1,0 +1,38 @@
+skillid: pg_alter_language
+name: ALTER LANGUAGE
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a procedural language"
+  detailed: |
+    ALTER LANGUAGE changes the definition of a procedural language.
+    The only functionality is to rename the language or assign a new owner.
+    You must be superuser or owner of the language to use ALTER LANGUAGE.
+
+syntax:
+  primary: |
+    ALTER [ PROCEDURAL ] LANGUAGE name RENAME TO new_name
+    ALTER [ PROCEDURAL ] LANGUAGE name OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+
+key_parameters:
+  - name: "name"
+    description: "Name of a language"
+    pg_specific: true
+  - name: "new_name"
+    description: "The new name of the language"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The new owner of the language"
+    pg_specific: false
+  - name: "PROCEDURAL"
+    description: "Noise word that can be omitted"
+    pg_specific: true
+
+related_commands:
+  - skillid: pg_create_language
+  - skillid: pg_drop_language
+
+metadata:
+  source_page: 1560
+  doc_version: "PostgreSQL 16.4"

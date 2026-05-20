@@ -1,0 +1,37 @@
+skillid: pg_create_table_as
+name: CREATE TABLE AS
+category: DDL
+subcategory: create
+
+description:
+  brief: "Define a new table from the results of a query"
+
+syntax:
+  primary: "CREATE [ [ GLOBAL | LOCAL ] { TEMPORARY | TEMP } | UNLOGGED ] TABLE [ IF NOT EXISTS ] table_name [ (column_name [, ...] ) ] [ USING method ] [ WITH ( storage_parameter [= value] [, ...] ) | WITHOUT OIDS ] [ ON COMMIT { PRESERVE ROWS | DELETE ROWS | DROP } ] [ TABLESPACE tablespace_name ] AS query [ WITH [ NO ] DATA ]"
+
+key_parameters:
+  - name: TEMPORARY | TEMP
+    description: "If specified, the table is created as a temporary table"
+  - name: UNLOGGED
+    description: "If specified, the table is created as an unlogged table"
+  - name: IF NOT EXISTS
+    description: "Do not throw an error if a relation with the same name already exists"
+  - name: table_name
+    description: "The name (optionally schema-qualified) of the table to be created"
+  - name: column_name
+    description: "The name of a column in the new table"
+  - name: USING method
+    description: "Specifies the table access method to use"
+  - name: query
+    description: "A SELECT, TABLE, or VALUES command, or an EXECUTE command"
+  - name: WITH [ NO ] DATA
+    description: "Specifies whether the data produced by the query should be copied into the new table"
+
+related_commands:
+  - CREATE TABLE
+  - CREATE MATERIALIZED VIEW
+  - SELECT INTO
+  - EXECUTE
+
+metadata:
+  source_page: 1796

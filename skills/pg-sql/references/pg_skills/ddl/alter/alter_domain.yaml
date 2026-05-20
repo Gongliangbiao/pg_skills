@@ -1,0 +1,76 @@
+skillid: pg_alter_domain
+name: ALTER DOMAIN
+category: DDL
+subcategory: alter
+
+description:
+  brief: "Change the definition of a domain"
+  detailed: |
+    ALTER DOMAIN changes the definition of an existing domain. There are several subforms:
+    - SET/DROP DEFAULT: Set or remove the default value for a domain
+    - SET/DROP NOT NULL: Change whether a domain allows NULL values
+    - ADD domain_constraint: Add a new constraint to a domain
+    - DROP CONSTRAINT: Drop constraints on a domain
+    - RENAME CONSTRAINT: Change the name of a constraint
+    - VALIDATE CONSTRAINT: Validate a constraint previously added as NOT VALID
+    - OWNER: Change the owner of the domain
+    - RENAME: Change the name of the domain
+    - SET SCHEMA: Change the schema of the domain
+
+syntax:
+  primary: |
+    ALTER DOMAIN name
+        { SET DEFAULT expression | DROP DEFAULT }
+    ALTER DOMAIN name
+        { SET | DROP } NOT NULL
+    ALTER DOMAIN name
+        ADD domain_constraint [ NOT VALID ]
+    ALTER DOMAIN name
+        DROP CONSTRAINT [ IF EXISTS ] constraint_name [ RESTRICT | CASCADE ]
+    ALTER DOMAIN name
+        RENAME CONSTRAINT constraint_name TO new_constraint_name
+    ALTER DOMAIN name
+        VALIDATE CONSTRAINT constraint_name
+    ALTER DOMAIN name
+        OWNER TO { new_owner | CURRENT_ROLE | CURRENT_USER | SESSION_USER }
+    ALTER DOMAIN name
+        RENAME TO new_name
+    ALTER DOMAIN name
+        SET SCHEMA new_schema
+
+key_parameters:
+  - name: "name"
+    description: "The name (possibly schema-qualified) of an existing domain to alter"
+    pg_specific: false
+  - name: "domain_constraint"
+    description: "New domain constraint for the domain"
+    pg_specific: false
+  - name: "constraint_name"
+    description: "Name of an existing constraint to drop or rename"
+    pg_specific: false
+  - name: "NOT VALID"
+    description: "Do not verify existing stored data for constraint validity"
+    pg_specific: true
+  - name: "CASCADE"
+    description: "Automatically drop objects that depend on the constraint"
+    pg_specific: false
+  - name: "RESTRICT"
+    description: "Refuse to drop the constraint if there are any dependent objects (default)"
+    pg_specific: false
+  - name: "new_name"
+    description: "The new name for the domain"
+    pg_specific: false
+  - name: "new_owner"
+    description: "The user name of the new owner of the domain"
+    pg_specific: false
+  - name: "new_schema"
+    description: "The new schema for the domain"
+    pg_specific: false
+
+related_commands:
+  - skillid: pg_create_domain
+  - skillid: pg_drop_domain
+
+metadata:
+  source_page: 1535
+  doc_version: "PostgreSQL 16.4"

@@ -1,0 +1,24 @@
+skillid: pg_select_into
+name: SELECT INTO
+category: DML
+
+description:
+  brief: "从查询结果定义一个新表"
+
+syntax:
+  primary: "[ WITH [ RECURSIVE ] with_query [, ...] ]\nSELECT [ ALL | DISTINCT [ ON ( expression [, ...] ) ] ]\n    [ { * | expression [ [ AS ] output_name ] } [, ...] ]\n    INTO [ TEMPORARY | TEMP | UNLOGGED ] [ TABLE ] new_table\n    [ FROM from_item [, ...] ]\n    [ WHERE condition ]\n    [ GROUP BY expression [, ...] ]\n    [ HAVING condition ]\n    [ WINDOW window_name AS ( window_definition ) [, ...] ]\n    [ { UNION | INTERSECT | EXCEPT } [ ALL | DISTINCT ] select ]\n    [ ORDER BY expression [ ASC | DESC | USING operator ] [ NULLS { FIRST | LAST } ] [, ...] ]\n    [ LIMIT { count | ALL } ]\n    [ OFFSET start [ ROW | ROWS ] ]\n    [ FETCH { FIRST | NEXT } [ count ] { ROW | ROWS } ONLY ]\n    [ FOR { UPDATE | SHARE } [ OF table_name [, ...] ] [ NOWAIT ] [...] ]"
+
+key_parameters:
+  - name: "TEMPORARY or TEMP"
+    description: "如果指定，则创建临时表"
+  - name: "UNLOGGED"
+    description: "如果指定，则创建非日志表"
+  - name: "new_table"
+    description: "要创建的表的名称"
+
+related_commands:
+  - "SELECT"
+  - "CREATE TABLE AS"
+
+metadata:
+  source_page: 1994
