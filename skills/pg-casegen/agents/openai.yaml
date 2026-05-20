@@ -1,7 +1,0 @@
-interface:
-  display_name: "PostgreSQL 用例生成器"
-  short_description: "生成 PostgreSQL regression 覆盖用例"
-  default_prompt: "使用 $pg-casegen 将这个 PostgreSQL 覆盖需求扩展为 regression 风格 SQL 用例文件，不生成 expected。"
-
-policy:
-  allow_implicit_invocation: true

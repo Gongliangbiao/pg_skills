@@ -1,7 +1,0 @@
-interface:
-  display_name: "PostgreSQL SQL Reference"
-  short_description: "Look up PostgreSQL SQL syntax and concurrency topics"
-  default_prompt: "Use $pg-sql to answer this PostgreSQL syntax or concurrency question from the bundled YAML knowledge base."
-
-policy:
-  allow_implicit_invocation: true

@@ -1,5 +1,7 @@
 # pg_skills
 
+[中文 README](README.zh-CN.md)
+
 `pg_skills` is a set of Codex skills for designing and generating PostgreSQL regression SQL test cases from official documentation, local knowledge, and reviewable test coverage artifacts.
 
 The current workflow separates coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
@@ -157,4 +159,3 @@ Before publishing, check:
 - release files do not contain local absolute paths
 - generated README examples use repository-relative paths
 - no `.DS_Store` or temporary files are included
-

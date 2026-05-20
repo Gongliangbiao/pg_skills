@@ -1,4 +1,0 @@
-interface:
-  display_name: "PG Case Design"
-  short_description: "把 PostgreSQL 测试点补全为用例设计输入"
-  default_prompt: "Use $pg-case-design to turn PostgreSQL test point overview files into SQL-generation-ready case design markdown."
