@@ -40,22 +40,9 @@ index
 - sql-only
 - error-output
 
-## 默认输出
+## 输出说明
 
-默认使用普通 regression 输出：
-
-```text
-index_<test_point>_<case_no>.sql
-```
-
-文件名必须表达测试点，例如：
-
-```text
-index_basic_btree_001.sql
-index_unique_nulls_not_distinct_002.sql
-index_expression_partial_003.sql
-index_drop_reindex_004.sql
-```
+本 pack 只定义索引主题的覆盖维度和生成规则，不定义最终文件名。最终 SQL 文件路径、文件名和数据库对象名由 output profile 与 `pg-sql-case-naming` 决定。
 
 ## 覆盖分层
 
@@ -85,7 +72,7 @@ index_drop_reindex_004.sql
 
 | 编号 | 覆盖点 | 类型 | pg-sql 依据 | 生成策略 |
 |---|---|---|---|---|
-| IDX-001 | 普通单列索引 | 正向 | `CREATE INDEX` basic example, `column_name` | `CREATE INDEX idx_<case>_c1 ON tab_<case>(c1)`，查询 `pg_indexes` 或 `pg_get_indexdef` |
+| IDX-001 | 普通单列索引 | 正向 | `CREATE INDEX` basic example, `column_name` | 使用按 `pg-sql-case-naming` 生成的表名和索引名创建单列索引，查询 `pg_indexes` 或 `pg_get_indexdef` |
 | IDX-002 | 显式索引名和自动索引名 | 正向 | `name` 可选 | 一个用例显式命名；自动命名只在输出稳定可控时覆盖，验证时避免依赖自动名称 |
 | IDX-003 | 多列索引 | 正向 | syntax 中 `[, ...]` | 创建 `(c1, c2)` 索引，验证定义 |
 | IDX-004 | 唯一索引 | 正向/反向 | `UNIQUE` | 插入唯一数据通过；重复数据作为负向块，预期外部框架采集错误 |
@@ -130,20 +117,20 @@ index_drop_reindex_004.sql
 
 | 文件建议 | 覆盖点 |
 |---|---|
-| `index_basic_btree_001.sql` | IDX-001、IDX-003、IDX-019、IDX-025、IDX-038 |
-| `index_unique_nulls_002.sql` | IDX-004、IDX-012、IDX-036 |
-| `index_expression_partial_003.sql` | IDX-005、IDX-006 |
-| `index_include_sorting_004.sql` | IDX-007、IDX-010、IDX-011 |
-| `index_if_exists_drop_005.sql` | IDX-008、IDX-026、IDX-033 |
-| `index_reindex_006.sql` | IDX-029、IDX-030 |
-| `index_methods_007.sql` | IDX-020、IDX-024；GIN/GiST/SP-GiST 视环境拆分 |
+| `docs/case-designs/.../index-basic-btree.md` | IDX-001、IDX-003、IDX-019、IDX-025、IDX-038 |
+| `docs/case-designs/.../index-unique-nulls.md` | IDX-004、IDX-012、IDX-036 |
+| `docs/case-designs/.../index-expression-partial.md` | IDX-005、IDX-006 |
+| `docs/case-designs/.../index-include-sorting.md` | IDX-007、IDX-010、IDX-011 |
+| `docs/case-designs/.../index-if-exists-drop.md` | IDX-008、IDX-026、IDX-033 |
+| `docs/case-designs/.../index-reindex.md` | IDX-029、IDX-030 |
+| `docs/case-designs/.../index-methods.md` | IDX-020、IDX-024；GIN/GiST/SP-GiST 视环境拆分 |
 
 ## 用例生成规则
 
-- 文件名必须表达测试点，例如 `index_expression_partial_003.sql`。
-- 表名从文件基础 ID 推导，例如 `tab_index_expression_partial_003`。
-- 索引名使用 `idx_<case_id>_<feature>`。
-- 约束名如需要，使用 `con_<case_id>_<feature>`。
+- 计划阶段只建议 case design 文件；最终 SQL 文件名由 output profile 和 `pg-sql-case-naming` 决定。
+- 表名和索引名从 `pg-sql-case-naming` 的对象名规则推导；表名前缀使用 `tab_`。
+- 索引名使用 `idx_<chapter-short>_<case-short>_<hash6>` 形态。
+- 约束名如需要，使用 `cons_<chapter-short>_<case-short>_<hash6>` 形态。
 - 每个 SQL 文件应自包含 setup 和 cleanup。
 - 验证索引定义时，优先查询 `pg_indexes`、`pg_class`、`pg_index` 或 `pg_get_indexdef`。
 - 所有 catalog 查询必须有确定性过滤条件和 `ORDER BY`。
@@ -158,7 +145,7 @@ index_drop_reindex_004.sql
 ```sql
 SELECT indexname, indexdef
 FROM pg_indexes
-WHERE tablename = 'tab_<case_id>'
+WHERE tablename = '<table_name>'
 ORDER BY indexname;
 ```
 
@@ -169,7 +156,7 @@ SELECT c.relname, pg_get_indexdef(c.oid) AS indexdef
 FROM pg_class c
 JOIN pg_index i ON i.indexrelid = c.oid
 JOIN pg_class t ON t.oid = i.indrelid
-WHERE t.relname = 'tab_<case_id>'
+WHERE t.relname = '<table_name>'
 ORDER BY c.relname;
 ```
 
@@ -193,6 +180,6 @@ ORDER BY c.relname;
 - 采用本 coverage pack。
 - 采用 `pg-regression` 还是 AB/并发 profile。
 - `CREATE INDEX`、`DROP INDEX`、`REINDEX`、`EXPLAIN` 对应 YAML。
-- 将生成哪些 SQL 文件。
+- 将生成哪些 case design 文件。
 - 每个文件覆盖哪些 IDX 编号。
 - 哪些点因为环境或并发原因暂不覆盖。

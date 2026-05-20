@@ -15,22 +15,21 @@ pg-regression
 默认生成单个 SQL 文件：
 
 ```text
-<test_point_slug>_<case_no>.sql
+sql/<module>/<official-section-dir>/<chapter-id>_<section-topic>_<test-point-slug>.sql
 ```
 
 示例：
 
 ```text
-foreign_key_020.sql
-foreign_key_on_update_delete_set_null_020.sql
+sql/chapter-74-transaction-processing/74.1-transactions-and-identifiers/74.1_transactions-and-identifiers_txid-xid-wraparound-epoch-increment.sql
+sql/chapter-13-concurrency-control/13.3-explicit-locking/13.3_explicit-locking_lock-table-conflict-matrix.sql
 ```
 
-文件名优先表达测试点，做到见名知意。使用小写 snake_case，尽量让读者只看文件名就能理解核心覆盖点。对象名必须与文件基础用例 ID 对应：
+文件名、目录和数据库对象名必须遵守 `pg-sql-case-naming`。文件名优先表达官方章节、目录主题和测试点，做到见名知意。对象名不能直接复用长文件名，应使用 `pg-sql-case-naming` 的短对象名规则：
 
 ```text
-file name:  foreign_key_020.sql
-table name: tab_foreign_key_020_a
-table name: tab_foreign_key_020_b
+file name:  74.1_transactions-and-identifiers_txid-xid-wraparound-epoch-increment.sql
+table name: tab_741_xid_wrap_epoch
 ```
 
 如果存在 bug 号或 feature 号，优先写入 header 字段；只有当项目明确要求时，才放入文件名。
@@ -99,13 +98,13 @@ SQL 文件应包含：
 - 将 `key(c_id)` 这类内联索引语法改为 PostgreSQL 约束或索引，例如 `UNIQUE (c_id)` 或 `CREATE INDEX`。
 - 将 `show create table` 改为稳定 catalog 验证，例如 `pg_constraint`、`pg_indexes` 或 `pg_get_constraintdef`。
 - 移除 PostgreSQL 不支持的 MySQL 选项，只保留 PostgreSQL 语法。
-- SQL 对象名使用小写，并使用确定性数据。
+- SQL 对象名使用小写，并遵守 `pg-sql-case-naming` 的短对象名规则。
 
 ## 清理后的 PostgreSQL 示例
 
 在更严格的项目规范给出前，使用本示例作为普通单文件输出标准。
 
-### `foreign_key_020.sql`
+### `13.x_constraints_foreign-key-set-null.sql`
 
 ```sql
 --  --------------------------------------------------------
@@ -125,44 +124,44 @@ SQL 文件应包含：
 SET client_min_messages TO warning;
 
 -- 创建表
-DROP TABLE IF EXISTS tab_foreign_key_020_b;
-DROP TABLE IF EXISTS tab_foreign_key_020_a;
-CREATE TABLE tab_foreign_key_020_a (
+DROP TABLE IF EXISTS tab_13x_fk_set_null_a1b2c3_b;
+DROP TABLE IF EXISTS tab_13x_fk_set_null_a1b2c3_a;
+CREATE TABLE tab_13x_fk_set_null_a1b2c3_a (
     id int,
     c_id int UNIQUE
 );
-CREATE TABLE tab_foreign_key_020_b (
+CREATE TABLE tab_13x_fk_set_null_a1b2c3_b (
     id int,
     c_id int
 );
 
 -- 给两个表之间添加外键约束
-ALTER TABLE tab_foreign_key_020_b
-    ADD CONSTRAINT fk_tab_foreign_key_020_b
+ALTER TABLE tab_13x_fk_set_null_a1b2c3_b
+    ADD CONSTRAINT cons_13x_fk_set_null_a1b2c3
     FOREIGN KEY (c_id)
-    REFERENCES tab_foreign_key_020_a(c_id)
+    REFERENCES tab_13x_fk_set_null_a1b2c3_a(c_id)
     MATCH FULL
     ON UPDATE SET NULL
     ON DELETE SET NULL;
 
 SELECT conname, pg_get_constraintdef(oid) AS definition
 FROM pg_constraint
-WHERE conname = 'fk_tab_foreign_key_020_b'
+WHERE conname = 'cons_13x_fk_set_null_a1b2c3'
 ORDER BY conname;
 
 -- 给两个表插入数据
-INSERT INTO tab_foreign_key_020_a VALUES (1, 4), (2, 5), (3, 6);
-INSERT INTO tab_foreign_key_020_b VALUES (4, 4), (5, 5), (6, 6);
-SELECT * FROM tab_foreign_key_020_a ORDER BY id;
-SELECT * FROM tab_foreign_key_020_b ORDER BY id;
+INSERT INTO tab_13x_fk_set_null_a1b2c3_a VALUES (1, 4), (2, 5), (3, 6);
+INSERT INTO tab_13x_fk_set_null_a1b2c3_b VALUES (4, 4), (5, 5), (6, 6);
+SELECT * FROM tab_13x_fk_set_null_a1b2c3_a ORDER BY id;
+SELECT * FROM tab_13x_fk_set_null_a1b2c3_b ORDER BY id;
 
--- 更改 tab_foreign_key_020_a 数据
-UPDATE tab_foreign_key_020_a SET c_id = 70 WHERE id = 1;
-SELECT * FROM tab_foreign_key_020_b ORDER BY id;
+-- 更改父表数据
+UPDATE tab_13x_fk_set_null_a1b2c3_a SET c_id = 70 WHERE id = 1;
+SELECT * FROM tab_13x_fk_set_null_a1b2c3_b ORDER BY id;
 
--- 删除 tab_foreign_key_020_a 数据
-DELETE FROM tab_foreign_key_020_a WHERE id = 2;
-SELECT * FROM tab_foreign_key_020_b ORDER BY id;
+-- 删除父表数据
+DELETE FROM tab_13x_fk_set_null_a1b2c3_a WHERE id = 2;
+SELECT * FROM tab_13x_fk_set_null_a1b2c3_b ORDER BY id;
 ```
 
 ## 待补充的项目规则
@@ -172,7 +171,6 @@ SELECT * FROM tab_foreign_key_020_b ORDER BY id;
 后续可能补充：
 
 - header 中各字段的真实取值规则
-- 对象命名细节
 - 事务包裹策略
 - cleanup 策略
 - psql 元命令使用策略

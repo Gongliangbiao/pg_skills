@@ -2,9 +2,9 @@
 
 ## 目标
 
-当用户输入比较模糊、范围较大，或要求“全量覆盖”时，`pg-casegen` 应先输出一份覆盖计划，让用户审阅后再生成 SQL 文件。
+当用户输入比较模糊、范围较大，或要求“全量覆盖”时，`pg-casegen` 应先输出一份覆盖计划。覆盖计划通过用户确认后，应先转成 `docs/case-designs/` 中的 ready case design，再生成 SQL 文件。
 
-覆盖计划不是最终用例文件，而是生成前的设计说明。它必须足够具体，让用户能判断覆盖范围、文件形态和暂缓项是否符合预期。
+覆盖计划不是最终用例文件，也不是 SQL 生成输入。它必须足够具体，让用户能判断覆盖范围、文件形态和暂缓项是否符合预期。
 
 ## 什么时候输出覆盖计划
 
@@ -12,16 +12,18 @@
 
 - 用户只给出宽泛主题，例如“覆盖索引”“生成数据类型用例”。
 - 用户要求“全量覆盖”“尽可能覆盖”“系统覆盖”。
-- coverage pack 包含多个覆盖维度。
+- 本次使用 coverage pack 且包含多个覆盖维度。
 - 需要选择 output profile，例如普通 regression 和 AB regression 二选一。
 - 需要 `pg-sql` 查询多个命令或概念。
 - 存在暂不覆盖项、缺失语法来源或多候选 YAML。
 
 以下情况可以直接生成 SQL：
 
-- 用户已经明确指定 case 名、输出格式、覆盖点和对象结构。
-- 用户明确说“不需要计划，直接生成”。
-- 本次只是按用户提供的精确规范改写一个很小的单文件用例。
+- 用户提供了 `docs/case-designs/` 下 `生成状态: ready` 的 case design。
+- 用户提供的内容等价于完整 case design，且包含执行设计、预期结果、会话数量和 SQL 生成约束。
+- 本次只是按用户提供的精确规范改写一个很小的 SQL 文件。
+
+即使用户明确说“不需要计划，直接生成”，如果没有 ready case design，也不要直接生成 SQL；应先补全 case design。
 
 ## 输出格式
 
@@ -33,13 +35,14 @@
 **用户需求理解**
 - 原始需求：<用户原话或摘要>
 - 规范化主题：<coverage-pack-id>
-- 生成模式：plan | generate
+- 生成模式：plan | design-needed
 - 覆盖范围：minimal | standard | full
 
 **模块选择**
 - coverage pack：`coverage-packs/<name>.md`
 - output profile：`output-profiles/<name>.md`
 - 是否需要多会话：是/否
+- 下一步产物：`docs/case-designs/...`
 
 **pg-sql 查询计划**
 | 查询项 | 目标 YAML | 使用字段 | 用途 |
@@ -49,13 +52,13 @@
 **计划生成文件**
 | 文件 | 说明 |
 |---|---|
-| `<file>.sql` | <用途> |
+| `docs/case-designs/<module>/<section>/<case>.md` | <对应测试点的 SQL 生成设计输入> |
 
 **对象命名**
 | 对象类型 | 名称规则或示例 |
 |---|---|
-| 表 | `tab_<case_id>` |
-| 索引 | `idx_<case_id>_<suffix>` |
+| 表 | 使用 `pg-sql-case-naming` 的短对象名规则 |
+| 索引 | 使用 `pg-sql-case-naming` 的短对象名规则 |
 
 **覆盖维度**
 | 编号 | 覆盖点 | 类型 | 依据 | 计划用例 |
@@ -72,7 +75,7 @@
 - 稳定性处理：<ORDER BY/catalog/避免非确定输出等>
 
 **待用户确认**
-- 是否按此计划生成？
+- 是否按此计划生成 case design？
 - 如需调整，请指出要增加、删除或拆分的覆盖点。
 ```
 
@@ -90,7 +93,7 @@
 
 ### 模块选择
 
-必须列出选中的 coverage pack 和 output profile。
+必须列出选中的 coverage pack 和候选 output profile。coverage pack 用于规划覆盖维度；output profile 用于说明后续 SQL 形态。
 
 如果选择 `pg-ab-regression`，必须说明多会话原因。
 
@@ -98,7 +101,7 @@
 
 每个核心 PostgreSQL 命令或概念都应列出。
 
-目标 YAML 已确定时，写具体路径；尚未查询时，可以先写“待查询”，但生成 SQL 前必须补全。
+目标 YAML 已确定时，写具体路径；尚未查询时，可以先写“待查询”，但生成 ready case design 或 SQL 前必须补全关键事实。
 
 使用字段示例：
 
@@ -112,30 +115,29 @@
 
 ### 计划生成文件
 
-普通单文件 regression 示例：
+普通单文件 case design 示例：
 
 ```text
-index_expression_partial_001.sql
+docs/case-designs/chapter-xx/.../index-expression-partial.md
 ```
 
-AB regression 示例：
+AB regression case design 示例：
 
 ```text
-repeatable_read_update_conflict_001A.sql
-repeatable_read_update_conflict_001B.sql
+docs/case-designs/chapter-13-concurrency-control/.../repeatable-read-update-conflict.md
 ```
 
-文件名必须符合 output profile，并优先表达测试点。bug 号或 feature 号优先放入 header，不作为默认文件名组成部分。
+计划阶段列出的文件是 case design 文件。最终 SQL 文件名由 output profile 和 `pg-sql-case-naming` 决定。
 
 ### 对象命名
 
 必须展示关键对象命名规则，尤其是表、索引、约束、函数、schema 和同步点。
 
-对象名必须能从文件名或 case ID 推导。
+对象名必须能从 case ID 推导，并遵守 `pg-sql-case-naming`。
 
 ### 覆盖维度
 
-覆盖维度来自 coverage pack，但可以结合 `pg-sql` 查询结果进一步展开。
+覆盖维度来自 coverage pack，但可以结合 `pg-sql` 查询结果进一步展开。展开结果后续应落到 case design，而不是直接跳到 SQL。
 
 类型建议使用：
 
@@ -167,6 +169,7 @@ repeatable_read_update_conflict_001B.sql
 - 使用 catalog 查询代替不稳定客户端输出。
 - 避免时间、随机值、PID、OID、执行计划 cost。
 - 遵守 output profile 中的 header、调度字段和注释风格。
+- SQL 生成前先形成 ready case design。
 
 ## 示例：索引覆盖计划
 
@@ -195,13 +198,14 @@ repeatable_read_update_conflict_001B.sql
 **计划生成文件**
 | 文件 | 说明 |
 |---|---|
-| `index_001.sql` | 基础索引、唯一索引、多列索引、表达式索引、部分索引覆盖 |
+| `docs/case-designs/chapter-index/index-basic-btree.md` | 基础 btree 索引用例设计 |
+| `docs/case-designs/chapter-index/index-expression-partial.md` | 表达式索引和部分索引用例设计 |
 
 **对象命名**
 | 对象类型 | 名称规则或示例 |
 |---|---|
-| 表 | `tab_index_expression_partial_001` |
-| 索引 | `idx_index_expression_partial_001_<feature>` |
+| 表 | `tab_<chapter-short>_<case-short>_<hash6>` |
+| 索引 | `idx_<chapter-short>_<case-short>_<hash6>` |
 
 **覆盖维度**
 | 编号 | 覆盖点 | 类型 | 依据 | 计划用例 |
@@ -222,13 +226,13 @@ repeatable_read_update_conflict_001B.sql
 - 稳定性处理：catalog 查询加确定性过滤，结果加 ORDER BY。
 
 **待用户确认**
-- 是否按此计划生成？
+- 是否按此计划生成 case design？
 - 是否需要把并发建索引拆成 AB 用例？
 ```
 
 ## 禁止事项
 
-- 不要把覆盖计划写成泛泛说明，必须包含文件名、对象名、覆盖维度和暂缓项。
+- 不要把覆盖计划写成泛泛说明，必须包含计划生成的 case design 文件、对象命名规则、覆盖维度和暂缓项。
 - 不要在没有 `pg-sql` 事实来源时承诺“全量覆盖”。
 - 不要隐藏 output profile 不支持的场景。
-- 不要把覆盖计划当作最终 SQL 文件。
+- 不要把覆盖计划当作最终 SQL 文件或 ready case design。
