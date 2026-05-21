@@ -4,12 +4,13 @@
 
 `pg_skills` is a set of AI agent skills for designing and generating PostgreSQL regression SQL test cases from official documentation, local knowledge, and reviewable test coverage artifacts. The skills are written in the standard skill directory format and can be installed into tools that support local skills, such as Codex and Claude Code.
 
-The current workflow separates coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
+The current workflow separates end-to-end orchestration, coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
 
 ## Skills
 
 | Skill | Responsibility | Main Output |
 | --- | --- | --- |
+| `pg-test-workflow` | Orchestrate the full documentation-to-SQL workflow and resume from intermediate artifacts. | Stage plan, delegated skill calls, delivery summary |
 | `pg-doc-extract` | Extract official-document chapter structure, test factors, factor values, priorities, combination strategy, no-test notes, and test-point overviews. | `docs/test-factors/`, `docs/test-points/`, optional XMind reports |
 | `pg-case-design` | Refine test-point overviews into detailed case design documents that are ready for SQL generation. | `docs/case-designs/` |
 | `pg-casegen` | Generate PostgreSQL regression SQL files from ready case designs. | `sql/` |
@@ -20,6 +21,7 @@ The current workflow separates coverage extraction, case design, SQL generation,
 
 ```text
 Official documentation / local knowledge
+  -> pg-test-workflow
   -> pg-doc-extract
   -> docs/test-factors/
   -> docs/test-points/
@@ -99,6 +101,7 @@ pg_skills/
 ├── README.md
 └── skills/
     ├── pg-doc-extract/
+    ├── pg-test-workflow/
     ├── pg-case-design/
     ├── pg-casegen/
     ├── pg-sql-case-naming/
@@ -123,6 +126,7 @@ Copy the skills into your Codex skills directory:
 ```bash
 mkdir -p ~/.codex/skills
 cp -R skills/pg-doc-extract ~/.codex/skills/
+cp -R skills/pg-test-workflow ~/.codex/skills/
 cp -R skills/pg-case-design ~/.codex/skills/
 cp -R skills/pg-casegen ~/.codex/skills/
 cp -R skills/pg-sql-case-naming ~/.codex/skills/
@@ -138,6 +142,7 @@ Copy the same skill directories into your Claude Code skills directory:
 ```bash
 mkdir -p ~/.claude/skills
 cp -R skills/pg-doc-extract ~/.claude/skills/
+cp -R skills/pg-test-workflow ~/.claude/skills/
 cp -R skills/pg-case-design ~/.claude/skills/
 cp -R skills/pg-casegen ~/.claude/skills/
 cp -R skills/pg-sql-case-naming ~/.claude/skills/
@@ -149,6 +154,12 @@ Restart Claude Code after installation so the new or updated skills are loaded.
 If your agent tool uses a different local skills directory, copy the directories under `skills/` into that tool's configured skills path.
 
 ## Usage Examples
+
+Run the full workflow from documentation to SQL:
+
+```text
+Use pg-test-workflow to generate test factors, test points, case designs, and SQL for PostgreSQL concurrency control chapter 13.
+```
 
 Extract test factors and test points from a PostgreSQL documentation chapter:
 

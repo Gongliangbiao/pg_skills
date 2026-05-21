@@ -1,0 +1,7 @@
+interface:
+  display_name: "PG Test Workflow"
+  short_description: "编排 PostgreSQL 文档到 SQL 用例的完整流程"
+  default_prompt: "Use $pg-test-workflow to run or resume the PostgreSQL documentation-to-SQL test asset workflow."
+
+policy:
+  allow_implicit_invocation: true
