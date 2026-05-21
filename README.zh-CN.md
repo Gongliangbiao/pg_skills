@@ -4,13 +4,14 @@
 
 `pg_skills` 是一组用于 PostgreSQL 回归 SQL 测试用例设计和生成的 AI agent skills。它面向从官方文档、本地知识库和可审阅覆盖产物出发，逐步形成测试因子、测试点、用例设计，最终生成 SQL 用例文件的工作流。这些 skills 采用标准 skill 目录格式，可安装到支持本地 skills 的工具中，例如 Codex 和 Claude Code。
 
-当前流程把端到端编排、覆盖抽取、用例设计、SQL 生成、SQL 命名和 PostgreSQL 语法查询拆成多个单一职责的 skill，方便逐步审查，也方便后续维护和扩展。
+当前流程把端到端编排、质量审查、覆盖抽取、用例设计、SQL 生成、SQL 命名和 PostgreSQL 语法查询拆成多个单一职责的 skill，方便逐步审查，也方便后续维护和扩展。
 
 ## Skills
 
 | Skill | 职责 | 主要输出 |
 | --- | --- | --- |
 | `pg-test-workflow` | 编排从文档到 SQL 的完整流程，并支持从中间产物断点续跑。 | 阶段计划、子 skill 调度、交付摘要 |
+| `pg-test-reviewer` | 审查 PostgreSQL 测试资产的来源真实性、追溯链路、设计就绪度、SQL 规范和测试价值。 | `pass` / `warning` / `blocked` 审查报告 |
 | `pg-doc-extract` | 从官方文档或本地知识中抽取章节结构、测试因子、因子取值、优先级、组合策略、无测试点说明和测试点概览。 | `docs/test-factors/`、`docs/test-points/`、可选 XMind 汇报 |
 | `pg-case-design` | 将测试点概览细化为可供 SQL 生成使用的用例设计文档。 | `docs/case-designs/` |
 | `pg-casegen` | 根据 ready case design 生成 PostgreSQL regression SQL 文件。 | `sql/` |
@@ -30,6 +31,7 @@
   -> docs/case-designs/
   -> pg-casegen
   -> sql/
+  -> 可选 pg-test-reviewer
 ```
 
 ### 覆盖建模层
@@ -103,6 +105,7 @@ pg_skills/
 └── skills/
     ├── pg-doc-extract/
     ├── pg-test-workflow/
+    ├── pg-test-reviewer/
     ├── pg-case-design/
     ├── pg-casegen/
     ├── pg-sql-case-naming/
@@ -128,6 +131,7 @@ cd pg_skills
 mkdir -p ~/.codex/skills
 cp -R skills/pg-doc-extract ~/.codex/skills/
 cp -R skills/pg-test-workflow ~/.codex/skills/
+cp -R skills/pg-test-reviewer ~/.codex/skills/
 cp -R skills/pg-case-design ~/.codex/skills/
 cp -R skills/pg-casegen ~/.codex/skills/
 cp -R skills/pg-sql-case-naming ~/.codex/skills/
@@ -144,6 +148,7 @@ cp -R skills/pg-sql ~/.codex/skills/
 mkdir -p ~/.claude/skills
 cp -R skills/pg-doc-extract ~/.claude/skills/
 cp -R skills/pg-test-workflow ~/.claude/skills/
+cp -R skills/pg-test-reviewer ~/.claude/skills/
 cp -R skills/pg-case-design ~/.claude/skills/
 cp -R skills/pg-casegen ~/.claude/skills/
 cp -R skills/pg-sql-case-naming ~/.claude/skills/
@@ -160,6 +165,12 @@ cp -R skills/pg-sql ~/.claude/skills/
 
 ```text
 使用 pg-test-workflow 为 PostgreSQL concurrency control 第 13 章生成测试因子、测试点、用例设计和 SQL。
+```
+
+审查已生成产物：
+
+```text
+使用 pg-test-reviewer 审查 chapter 13.2 的 docs/test-factors、docs/test-points、docs/case-designs 和 sql。
 ```
 
 从 PostgreSQL 文档章节抽取测试因子和测试点：

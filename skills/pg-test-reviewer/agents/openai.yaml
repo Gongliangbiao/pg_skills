@@ -1,0 +1,7 @@
+interface:
+  display_name: "PG Test Reviewer"
+  short_description: "审查 PostgreSQL 测试资产质量和链路一致性"
+  default_prompt: "Use $pg-test-reviewer to review PostgreSQL test factors, test points, case designs, SQL, or report artifacts."
+
+policy:
+  allow_implicit_invocation: true

@@ -4,13 +4,14 @@
 
 `pg_skills` is a set of AI agent skills for designing and generating PostgreSQL regression SQL test cases from official documentation, local knowledge, and reviewable test coverage artifacts. The skills are written in the standard skill directory format and can be installed into tools that support local skills, such as Codex and Claude Code.
 
-The current workflow separates end-to-end orchestration, coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
+The current workflow separates end-to-end orchestration, review, coverage extraction, case design, SQL generation, SQL naming, and PostgreSQL syntax lookup. This keeps each skill focused and makes every stage easier to review before moving to the next one.
 
 ## Skills
 
 | Skill | Responsibility | Main Output |
 | --- | --- | --- |
 | `pg-test-workflow` | Orchestrate the full documentation-to-SQL workflow and resume from intermediate artifacts. | Stage plan, delegated skill calls, delivery summary |
+| `pg-test-reviewer` | Review PostgreSQL test artifacts for source authenticity, traceability, readiness, SQL standards, and test value. | `pass` / `warning` / `blocked` review report |
 | `pg-doc-extract` | Extract official-document chapter structure, test factors, factor values, priorities, combination strategy, no-test notes, and test-point overviews. | `docs/test-factors/`, `docs/test-points/`, optional XMind reports |
 | `pg-case-design` | Refine test-point overviews into detailed case design documents that are ready for SQL generation. | `docs/case-designs/` |
 | `pg-casegen` | Generate PostgreSQL regression SQL files from ready case designs. | `sql/` |
@@ -30,6 +31,7 @@ Official documentation / local knowledge
   -> docs/case-designs/
   -> pg-casegen
   -> sql/
+  -> optional pg-test-reviewer
 ```
 
 ### Coverage Layer
@@ -102,6 +104,7 @@ pg_skills/
 └── skills/
     ├── pg-doc-extract/
     ├── pg-test-workflow/
+    ├── pg-test-reviewer/
     ├── pg-case-design/
     ├── pg-casegen/
     ├── pg-sql-case-naming/
@@ -127,6 +130,7 @@ Copy the skills into your Codex skills directory:
 mkdir -p ~/.codex/skills
 cp -R skills/pg-doc-extract ~/.codex/skills/
 cp -R skills/pg-test-workflow ~/.codex/skills/
+cp -R skills/pg-test-reviewer ~/.codex/skills/
 cp -R skills/pg-case-design ~/.codex/skills/
 cp -R skills/pg-casegen ~/.codex/skills/
 cp -R skills/pg-sql-case-naming ~/.codex/skills/
@@ -143,6 +147,7 @@ Copy the same skill directories into your Claude Code skills directory:
 mkdir -p ~/.claude/skills
 cp -R skills/pg-doc-extract ~/.claude/skills/
 cp -R skills/pg-test-workflow ~/.claude/skills/
+cp -R skills/pg-test-reviewer ~/.claude/skills/
 cp -R skills/pg-case-design ~/.claude/skills/
 cp -R skills/pg-casegen ~/.claude/skills/
 cp -R skills/pg-sql-case-naming ~/.claude/skills/
@@ -159,6 +164,12 @@ Run the full workflow from documentation to SQL:
 
 ```text
 Use pg-test-workflow to generate test factors, test points, case designs, and SQL for PostgreSQL concurrency control chapter 13.
+```
+
+Review generated artifacts:
+
+```text
+Use pg-test-reviewer to review docs/test-factors, docs/test-points, docs/case-designs, and sql for chapter 13.2.
 ```
 
 Extract test factors and test points from a PostgreSQL documentation chapter:
